@@ -3,15 +3,14 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Actions;
+use Filament\Tables\Actions\Action;
 
 class UserResource extends Resource
 {
@@ -31,13 +30,13 @@ class UserResource extends Resource
                 Forms\Components\Select::make('role')
                     ->options([
                         'admin' => 'Admin',
-                        'manager' => 'Manager',
-                        'user' => 'User',
+                        'marketer' => 'Marketer',
+                        'viewer' => 'Viewer',
                     ])
                     ->required(),
                 Forms\Components\Toggle::make('is_suspended')
                     ->label('Suspend User')
-                    ->help('Suspended users cannot access the system'),
+                    // ->help('Suspended users cannot access the system'),
             ]);
     }
 
@@ -61,17 +60,20 @@ class UserResource extends Resource
                 Tables\Filters\SelectFilter::make('role')
                     ->options([
                         'admin' => 'Admin',
-                        'manager' => 'Manager',
-                        'user' => 'User',
+                        'manager' => 'Marketer',
+                        'user' => 'Viewer',
                     ]),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                Actions\EditAction::make(),
+                Actions\DeleteAction::make(),
+                Action::make('Suspend')
+                    ->label(fn (User $record) => $record->is_suspended ? 'Unsuspend' : 'Suspend')
+                    ->action(fn (User $record) => $record->update(['is_suspended' => !$record->is_suspended]))
+                    ->requiresConfirmation()
+                    ->color(fn (User $record) => $record->is_suspended ? 'success' : 'danger')
+                    // ->icon(fn (User $record) => $record->is_suspended ? 'heroicon-s-check-circle' : 'heroicon-o-ban')
+                    ->visible(fn (User $record) => $record->role !== 'admin'), 
             ]);
     }
 
