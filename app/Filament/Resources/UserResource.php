@@ -34,9 +34,12 @@ class UserResource extends Resource
                         'viewer' => 'Viewer',
                     ])
                     ->required(),
+                Forms\Components\TextInput::make('password')  
+                    ->password()
+                    ->required()
+                    ->minLength(8),  // Enforce some password requirements
                 Forms\Components\Toggle::make('is_suspended')
-                    ->label('Suspend User')
-                    // ->help('Suspended users cannot access the system'),
+                    ->label('Suspend User'),
             ]);
     }
 
@@ -64,16 +67,20 @@ class UserResource extends Resource
                         'user' => 'Viewer',
                     ]),
             ])
-            ->actions([
+    ->actions([
                 Actions\EditAction::make(),
                 Actions\DeleteAction::make(),
                 Action::make('Suspend')
-                    ->label(fn (User $record) => $record->is_suspended ? 'Unsuspend' : 'Suspend')
-                    ->action(fn (User $record) => $record->update(['is_suspended' => !$record->is_suspended]))
-                    ->requiresConfirmation()
-                    ->color(fn (User $record) => $record->is_suspended ? 'success' : 'danger')
-                    // ->icon(fn (User $record) => $record->is_suspended ? 'heroicon-s-check-circle' : 'heroicon-o-ban')
-                    ->visible(fn (User $record) => $record->role !== 'admin'), 
+    ->label(fn (User $record) => $record->is_suspended ? 'Unsuspend' : 'Suspend')
+    ->action(function (User $record) {
+        // Toggle the suspension state
+        $record->is_suspended = !$record->is_suspended;
+        $record->save(); // Ensure the change is saved to the database
+    })
+    ->requiresConfirmation()
+    ->color(fn (User $record) => $record->is_suspended ? 'success' : 'danger')
+    ->visible(fn (User $record) => $record->role !== 'admin'),
+
             ]);
     }
 
