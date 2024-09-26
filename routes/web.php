@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use Illuminate\Support\Facades\Auth;
 
 
 
@@ -31,7 +32,10 @@ Route::middleware('guest')->group(function () {
    
     Route::get('register', [RegisterController::class, 'create'])->name('register');
     Route::post('register', [RegisterController::class, 'store']);
-    
+    // Route::middleware('auth')->post('/logout', function () {
+    //     Auth::logout();
+    //     return redirect('/login');
+    // })->name('logout');
     
 });
 

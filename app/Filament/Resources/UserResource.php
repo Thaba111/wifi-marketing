@@ -37,7 +37,7 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('password')  
                     ->password()
                     ->required()
-                    ->minLength(8),  // Enforce some password requirements
+                    ->minLength(8),  
                 Forms\Components\Toggle::make('is_suspended')
                     ->label('Suspend User'),
             ]);
