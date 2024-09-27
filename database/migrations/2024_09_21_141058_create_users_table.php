@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->enum('role', ['admin', 'marketer', 'viewer'])->default();
             $table->boolean('status')->default(true);  // Active or inactive status
             $table->timestamps();
         });
