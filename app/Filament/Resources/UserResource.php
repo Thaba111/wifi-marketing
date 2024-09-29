@@ -11,6 +11,8 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Tables\Actions;
 use Filament\Tables\Actions\Action;
+use Filament\Notifications\Notification;
+
 
 class UserResource extends Resource
 {
@@ -50,6 +52,7 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                 ->sortable()
                 ->searchable(),
+                
             Tables\Columns\TextColumn::make('email')
                 ->sortable()
                 ->searchable(),
@@ -57,7 +60,12 @@ class UserResource extends Resource
                 ->sortable(),
             Tables\Columns\BooleanColumn::make('is_suspended')
                 ->label('Suspended'),
-            ])
+            
+           
+             
+    ])
+       
+
             ->filters([
                 // Filtering users based on their roles
                 Tables\Filters\SelectFilter::make('role')
@@ -67,22 +75,55 @@ class UserResource extends Resource
                         'user' => 'Viewer',
                     ]),
             ])
-    ->actions([
+            ->actions([
                 Actions\EditAction::make(),
                 Actions\DeleteAction::make(),
-                Action::make('Suspend')
-    ->label(fn (User $record) => $record->is_suspended ? 'Unsuspend' : 'Suspend')
-    ->action(function (User $record) {
-        // Toggle the suspension state
-        $record->is_suspended = !$record->is_suspended;
-        $record->save(); // Ensure the change is saved to the database
-    })
-    ->requiresConfirmation()
-    ->color(fn (User $record) => $record->is_suspended ? 'success' : 'danger')
-    ->visible(fn (User $record) => $record->role !== 'admin'),
-
+                Action::make('Toggle Suspension')
+                    ->label(fn (User $record) => $record->is_suspended ? 'Unsuspend' : 'Suspend')
+                    ->action(function (User $record, array $data) {
+                        // Prevent suspension of admin users
+                        if ($record->role === 'admin') {
+                            throw new \Exception('Admin users cannot be suspended.');
+                        }
+            
+                        // If the user is being suspended
+                        if (!$record->is_suspended) {
+                            if (!isset($data['suspension_reason'])) {
+                                throw new \Exception('Suspension reason is required.');
+                            }
+                            $record->suspension_reason = $data['suspension_reason'];
+                            $record->is_suspended = true;
+                        } else {
+                            // If the user is being unsuspended
+                            $record->is_suspended = false;
+                            $record->suspension_reason = null; // Clear reason when unsuspending
+                        }
+            
+                        $record->save();
+            
+                        // Notification based on the action
+                        Notification::make()
+                            ->success()
+                            ->title($record->is_suspended ? 'User suspended' : 'User unsuspended')
+                            ->body('The user has been ' . ($record->is_suspended ? 'suspended' : 'unsuspended') . ' successfully.')
+                            ->send();
+                    })
+                    ->form([
+                        Forms\Components\Textarea::make('suspension_reason')
+                            ->label('Reason for Suspension')
+                            ->required(fn (User $record) => !$record->is_suspended) // Required only when suspending
+                            ->maxLength(500)
+                            ->placeholder('Please state the reason for suspension here...')
+                            ->visible(fn (User $record) => !$record->is_suspended), // Show only when suspending
+                    ])
+                    ->requiresConfirmation(fn (User $record) => $record->is_suspended) // Confirmation only when unsuspending
+                    ->modalHeading('Confirm Unsuspend')
+                    ->modalButton('Yes, Unsuspend')
+                    ->hidden(fn (User $record) => $record->role === 'admin'), // Hide if the user is an admin
             ]);
+            
     }
+    
 
     public static function getRelations(): array
     {

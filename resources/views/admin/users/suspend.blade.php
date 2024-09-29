@@ -3,17 +3,17 @@
 @section('content')
     <h1>Suspend User</h1>
 
-    <form action="{{ route('admin.users.suspend', $user->id) }}" method="POST">
-        @csrf
-        @method('POST')
+    <form action="{{ route('admin.suspend', $user->id) }}" method="POST">
+    @csrf
+    <label for="reason">Reason for Suspension:</label>
+    <textarea name="reason" id="reason" required></textarea>
+    <button type="submit">Suspend User</button>
+</form>
+@if($user->is_suspended && $user->suspension_reason)
+    <p><strong>Suspension Reason:</strong> {{ $user->suspension_reason }}</p>
+@endif
 
-        <div>
-            <label for="reason">Suspension Reason:</label>
-            <textarea id="reason" name="reason" rows="4" cols="50" required></textarea>
-        </div>
-
-        <div>
-            <button type="submit">Suspend User</button>
-        </div>
-    </form>
 @endsection
+
+
+

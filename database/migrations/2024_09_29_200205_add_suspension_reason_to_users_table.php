@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('suspension_reason')->nullable();
+            $table->string('suspension_reason', 255)->after('is_suspended');
         });
     }
 
