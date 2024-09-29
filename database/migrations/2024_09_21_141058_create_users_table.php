@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();  // Auto-increment ID
-            $table->string('name');  
-            $table->string('email')->unique();  
-            $table->string('password');  
-            $table->enum('role', ['admin', 'marketer', 'viewer']);  
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->enum('role', ['admin', 'marketer', 'viewer'])->default();
             $table->boolean('status')->default(true);  // Active or inactive status
-            $table->timestamps();  
+            $table->timestamps();
         });
     }
 
