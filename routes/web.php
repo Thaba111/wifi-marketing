@@ -20,9 +20,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    // Route::get('register', [RegisterController::class, 'create'])->name('register');
-    // Route::post('register', [RegisterController::class, 'store']);
-
+    
 });
 
 Route::middleware('guest')->group(function () {
@@ -32,10 +30,7 @@ Route::middleware('guest')->group(function () {
    
     Route::get('register', [RegisterController::class, 'create'])->name('register');
     Route::post('register', [RegisterController::class, 'store']);
-    // Route::middleware('auth')->post('/logout', function () {
-    //     Auth::logout();
-    //     return redirect('/login');
-    // })->name('logout');
+    
     
 });
 
