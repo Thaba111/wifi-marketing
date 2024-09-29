@@ -14,6 +14,7 @@ use Filament\Tables\Actions\Action;
 use Filament\Notifications\Notification;
 
 
+
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
@@ -96,7 +97,7 @@ class UserResource extends Resource
                         } else {
                             // If the user is being unsuspended
                             $record->is_suspended = false;
-                            $record->suspension_reason = null; // Clear reason when unsuspending
+                            $record->suspension_reason = null; 
                         }
             
                         $record->save();
@@ -111,14 +112,14 @@ class UserResource extends Resource
                     ->form([
                         Forms\Components\Textarea::make('suspension_reason')
                             ->label('Reason for Suspension')
-                            ->required(fn (User $record) => !$record->is_suspended) // Required only when suspending
+                            ->required(fn (User $record) => !$record->is_suspended) 
                             ->maxLength(500)
                             ->placeholder('Please state the reason for suspension here...')
-                            ->visible(fn (User $record) => !$record->is_suspended), // Show only when suspending
+                            ->visible(fn (User $record) => !$record->is_suspended), 
                     ])
-                    ->requiresConfirmation(fn (User $record) => $record->is_suspended) // Confirmation only when unsuspending
-                    ->modalHeading('Confirm Unsuspend')
-                    ->modalButton('Yes, Unsuspend')
+                    ->requiresConfirmation(fn (User $record) => $record->is_suspended) 
+                    ->modalHeading('Confirm Suspension')
+                    ->modalButton('Yes, Suspend')
                     ->hidden(fn (User $record) => $record->role === 'admin'), // Hide if the user is an admin
             ]);
             
