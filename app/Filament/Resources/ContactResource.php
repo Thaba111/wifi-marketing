@@ -2,16 +2,14 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ContactResource\Pages;
-use App\Filament\Resources\ContactResource\RelationManagers;
+use App\Filament\Resources\ContactResource\RelationManagers\SegmentRelationManager; 
 use App\Models\Contact;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\ContactResource\Pages;
 
 class ContactResource extends Resource
 {
@@ -22,22 +20,21 @@ class ContactResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-        ->schema([
-            Forms\Components\TextInput::make('name')
-                ->required()
-                ->maxLength(255),
-            Forms\Components\TextInput::make('email')
-                ->required()
-                ->email()
-                ->unique(Contact::class, 'email', ignorable: fn ($record) => $record),
-            Forms\Components\TextInput::make('phone_number')
-                ->required()
-                ->maxLength(20),
-            Forms\Components\TextInput::make('location')
-                ->nullable()
-                ->maxLength(255),
-            
-        ]);
+            ->schema([
+                Forms\Components\TextInput::make('name')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('email')
+                    ->required()
+                    ->email()
+                    ->unique(Contact::class, 'email', ignorable: fn ($record) => $record),
+                Forms\Components\TextInput::make('phone_number')
+                    ->required()
+                    ->maxLength(20),
+                Forms\Components\TextInput::make('location')
+                    ->nullable()
+                    ->maxLength(255),
+            ]);
     }
 
     public static function table(Table $table): Table
@@ -49,9 +46,6 @@ class ContactResource extends Resource
                 Tables\Columns\TextColumn::make('email')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('phone_number')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('location')->sortable()->searchable(),
-            ])
-            ->filters([
-                //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -67,7 +61,7 @@ class ContactResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            SegmentRelationManager::class, 
         ];
     }
 
