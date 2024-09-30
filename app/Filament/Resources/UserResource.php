@@ -12,6 +12,7 @@ use Filament\Tables\Table;
 use Filament\Tables\Actions;
 use Filament\Tables\Actions\Action;
 use Filament\Notifications\Notification;
+use Illuminate\Support\Facades\Mail;
 
 
 
@@ -94,11 +95,16 @@ class UserResource extends Resource
                             }
                             $record->suspension_reason = $data['suspension_reason'];
                             $record->is_suspended = true;
+
+                            Mail::to($record->email)->send(new \App\Mail\UserSuspendedMail($record, $data['suspension_reason']));
+
                         } else {
                             // If the user is being unsuspended
                             $record->is_suspended = false;
                             $record->suspension_reason = null; 
                         }
+
+                        
             
                         $record->save();
             
@@ -106,7 +112,8 @@ class UserResource extends Resource
                         Notification::make()
                             ->success()
                             ->title($record->is_suspended ? 'User suspended' : 'User unsuspended')
-                            ->body('The user has been ' . ($record->is_suspended ? 'suspended' : 'unsuspended') . ' successfully.')
+                            ->icon('heroicon-o-document-text')
+                            ->body('{$user.name} has been ' . ($record->is_suspended ? 'suspended' : 'unsuspended') . ' successfully.')
                             ->send();
                     })
                     ->form([
@@ -118,8 +125,8 @@ class UserResource extends Resource
                             ->visible(fn (User $record) => !$record->is_suspended), 
                     ])
                     ->requiresConfirmation(fn (User $record) => $record->is_suspended) 
-                    ->modalHeading('Confirm Suspension')
-                    ->modalButton('Yes, Suspend')
+                    ->modalHeading('Confirmation Needed!!')
+                    ->modalButton('Yes ')
                     ->hidden(fn (User $record) => $record->role === 'admin'), // Hide if the user is an admin
             ]);
             

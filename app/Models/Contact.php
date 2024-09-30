@@ -8,7 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Contact extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'name', 'email', 'phone'
-    ];
+    protected $fillable = ['name', 'email', 'phone_number', 'location', 'segment_id'];
+
+    public function segment()
+    {
+        return $this->belongsTo(Segment::class);
+    }
 }

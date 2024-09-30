@@ -1,16 +1,29 @@
-@foreach($users as $user)
-    <tr>
-        <td>{{ $user->name }}</td>
-        <td>{{ $user->email }}</td>
-        <td>{{ $user->is_suspended ? 'Yes' : 'No' }}</td>
-        <td>{{ $user->suspension_reason ?? 'N/A' }}</td> <!-- Display reason if exists -->
-        <td>
-            <form action="{{ route('admin.suspend', $user->id) }}" method="POST">
-                @csrf
-                <label for="reason">Reason for Suspension:</label>
-                <textarea name="reason" required></textarea>
-                <button type="submit">Suspend User</button>
-            </form>
-        </td>
-    </tr>
-@endforeach
+@extends('layouts.app')
+
+@section('content')
+    <h1>Contacts</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Location</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($contacts as $contact)
+                <tr>
+                    <td>{{ $contact->name }}</td>
+                    <td>{{ $contact->email }}</td>
+                    <td>{{ $contact->phone_number }}</td>
+                    <td>{{ $contact->location }}</td>
+                    <td>
+                        <!-- Add action buttons (edit, delete) here -->
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+@endsection
