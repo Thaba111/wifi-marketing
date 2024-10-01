@@ -9,11 +9,21 @@ use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
+    
     public function index()
     {
         $contacts = Contact::with('segment')->get();
         return view('contacts.index', compact('contacts'));
     }
+
+    public function show($id)
+    {
+        $contact = Contact::find($id);
+        $segment = $contact->segment; 
+
+        return view('contacts.show', compact('contact', 'segment'));
+    }
+
 
     public function create()
     {
@@ -35,11 +45,14 @@ class ContactController extends Controller
         return redirect()->route('contacts.index')->with('success', 'Contact created successfully.');
     }
 
-    public function edit(Contact $contact)
+    public function edit($id)
     {
-        $segments = Segment::all();
-        return view('contacts.edit', compact('contact', 'segments'));
+        $contact = Contact::with('segments')->findOrFail($id);
+        // $segments = Segment::all(); // Get all segments for the dropdown
+
+        return view('contacts.edit', compact('contact'));
     }
+
 
     public function update(Request $request, Contact $contact)
     {

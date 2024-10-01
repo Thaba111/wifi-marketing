@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('segments', function (Blueprint $table) {
+        Schema::create('contact_segment', function (Blueprint $table) {
             $table->id();
-            $table->string('name'); 
-            $table->json('criteria'); 
             $table->foreignId('contact_id')->constrained()->onDelete('cascade');
+            $table->foreignId('segment_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('segments');
+        Schema::dropIfExists('contact_segment');
     }
 };

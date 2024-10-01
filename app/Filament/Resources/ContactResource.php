@@ -61,7 +61,7 @@ class ContactResource extends Resource
     public static function getRelations(): array
     {
         return [
-            SegmentRelationManager::class, 
+            // SegmentRelationManager::class, 
         ];
     }
 
