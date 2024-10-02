@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Contact extends Model
 {
@@ -13,5 +14,10 @@ class Contact extends Model
     public function segments()
     {
         return $this->hasMany(Segment::class);
+    }
+
+    public function contactSegments(): HasMany
+    {
+        return $this->hasMany(ContactSegment::class, 'contact_id');
     }
 }

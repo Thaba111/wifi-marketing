@@ -22,13 +22,41 @@ class SegmentResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
+            ->schema(self::getFormSchema());
+    }
+
+    public static function getFormSchema(): array
+    {
+        return [
                 Forms\Components\TextInput::make('name')
-                ->required(),
-            Forms\Components\Textarea::make('criteria')
-                ->required()
-                ->label('Criteria (JSON format)'),
-            ]);
+                    ->required(),
+                Forms\Components\Select::make('age')
+                    ->multiple()
+                    ->required()
+                    ->options([
+                        '18-24' => '18-24',
+                        '25-34' => '25-34',
+                        '35-44' => '35-44',
+                        '45-54' => '45-54',
+                        '55-64' => '55-64',
+                        '65+' => '65+',
+                    ]),
+                Forms\Components\Select::make('interests')
+                    ->required()
+                    ->multiple()
+                    ->options([
+                        'sports' => 'Sports',
+                        'music' => 'Music',
+                        'technology' => 'Technology',
+                        'fashion' => 'Fashion',
+                    ]),
+                Forms\Components\Select::make('location')
+                    ->required()
+                    ->options([
+                        'nairobi' => 'Nairobi',
+                        'machakos' => 'Machakos'
+                    ]),
+        ];
     }
 
     public static function table(Table $table): Table
@@ -36,7 +64,7 @@ class SegmentResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('criteria'),
+                Tables\Columns\TextColumn::make('criteria')
             ])
             ->filters([
                 //

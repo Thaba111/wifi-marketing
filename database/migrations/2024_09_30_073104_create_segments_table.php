@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('segments', function (Blueprint $table) {
             $table->id();
-            $table->string('name'); 
-            $table->json('criteria'); 
-            $table->foreignId('contact_id')->constrained()->onDelete('cascade');
+            $table->string('name');
+            $table->json('criteria');
             $table->timestamps();
         });
     }
