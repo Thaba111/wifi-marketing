@@ -2,10 +2,8 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ContactResource\RelationManagers\ContactSegmentsRelationManager;
-use App\Filament\Resources\ContactResource\RelationManagers\SegmentRelationManager;
+use App\Filament\Resources\ContactResource\RelationManagers\SegmentRelationManager; 
 use App\Models\Contact;
-use App\Models\Segment;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -23,13 +21,6 @@ class ContactResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('segment_id')
-                    ->label('Segment')
-                    ->hiddenOn('edit')
-                    ->searchable()
-                    ->columnSpanFull()
-                    ->options(fn () => Segment::pluck('name', 'id'))
-                    ->required(),
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
@@ -50,6 +41,7 @@ class ContactResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('id')->sortable(),
                 Tables\Columns\TextColumn::make('name')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('email')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('phone_number')->sortable()->searchable(),
@@ -69,7 +61,7 @@ class ContactResource extends Resource
     public static function getRelations(): array
     {
         return [
-            ContactSegmentsRelationManager::class
+            // SegmentRelationManager::class, 
         ];
     }
 
