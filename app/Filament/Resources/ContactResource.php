@@ -12,6 +12,12 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use App\Filament\Resources\ContactResource\Pages;
+use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ContactsExport;
+use App\Imports\ContactsImport;
+
+
 
 class ContactResource extends Resource
 {
@@ -63,6 +69,22 @@ class ContactResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+
+             ])
+            ->headerActions([
+                // Import button
+                Tables\Actions\Action::make('import')
+                    ->label('Import Contacts')
+                    ->url(route('contacts.import'))
+                    ->color('success'),
+    
+                // Export button
+                Tables\Actions\Action::make('export')
+                    ->label('Export Contacts')
+                    ->url(route('contacts.export'))
+                    ->color('primary'),
+                
+            
             ]);
     }
 
@@ -81,4 +103,24 @@ class ContactResource extends Resource
             'edit' => Pages\EditContact::route('/{record}/edit'),
         ];
     }
+
+    public static function importContacts(Request $request)
+{
+    // Validate the incoming request for the file
+    $request->validate([
+        'file' => 'required|file|mimes:xlsx,xls,csv',
+    ]);
+
+    // Import logic here, e.g., using Laravel Excel
+    Excel::import(new ContactsImport, $request->file('file'));
+
+    return redirect()->route('contacts.index')->with('success', 'Contacts imported successfully!');
+}
+
+public static function exportContacts()
+{
+    // Export logic here, e.g., using Laravel Excel
+    return Excel::download(new ContactsExport, 'contacts.xlsx');
+}
+
 }

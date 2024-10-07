@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 use App\Models\Contact;
 use App\Models\Segment;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ContactsExport;
+use App\Imports\ContactsImport;
+
 
 
 
@@ -73,4 +77,31 @@ class ContactController extends Controller
         $contact->delete();
         return redirect()->route('contacts.index')->with('success', 'Contact deleted successfully.');
     }
+
+   // In your ContactController
+
+    public function import()
+    {
+        return view('contacts.import');
+    }
+
+    public function importStore(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv|max:2048',
+        ]);
+
+        // Import the contacts using the Maatwebsite Excel package
+        Excel::import(new ContactsImport, $request->file('file'));
+
+        return redirect()->route('contacts.index')->with('success', 'Contacts imported successfully.');
+    }
+
+    // In your ContactController
+
+    public function export()
+    {
+        return Excel::download(new ContactsExport, 'contacts.xlsx'); // or 'contacts.csv' for CSV format
+    }
+
 }
