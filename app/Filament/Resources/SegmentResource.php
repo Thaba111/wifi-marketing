@@ -31,7 +31,7 @@ class SegmentResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required(),
                 Forms\Components\Select::make('age')
-                    ->multiple()
+                    // ->multiple()
                     ->required()
                     ->options([
                         '18-24' => '18-24',
@@ -43,7 +43,7 @@ class SegmentResource extends Resource
                     ]),
                 Forms\Components\Select::make('interests')
                     ->required()
-                    ->multiple()
+                    // ->multiple()
                     ->options([
                         'sports' => 'Sports',
                         'music' => 'Music',
