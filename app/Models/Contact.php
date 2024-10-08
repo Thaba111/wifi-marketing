@@ -13,7 +13,7 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 class Contact extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'email', 'phone_number', 'location', 'segment_id'];
+    protected $fillable = ['name', 'email', 'phone_number', 'location'];
 
     public function segments()
     {
@@ -24,28 +24,4 @@ class Contact extends Model
     {
         return $this->hasMany(ContactSegment::class, 'contact_id');
     }
-
-     // Required for importing
-     public function model(array $row)
-     {
-         return new Contact([
-             'name'        => $row['name'],
-            'email'       => $row['email'],
-            'phone_number' => $row['phone_number'],
-            'location'    => $row['location'],
-            'segment_id'  => $row['segment_id'],
-         ]);
-     }
- 
-     // Required for exporting
-     public function headings(): array
-     {
-         return [
-             'Name',
-             'Email',
-             'Phone Number',
-             'Location',
-             'Segment ID',
-         ];
-     }
 }

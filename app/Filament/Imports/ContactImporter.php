@@ -25,20 +25,18 @@ class ContactImporter extends Importer
                 ->rules(['required', 'max:255']),
             ImportColumn::make('location')
                 ->rules(['max:255']),
-            // ImportColumn::make('segment_id')
-            //     ->numeric()
-            //     ->rules(['integer']),
         ];
     }
 
     public function resolveRecord(): ?Contact
     {
-        // return Contact::firstOrNew([
-        //     // Update existing records, matching them by `$this->data['column_name']`
-        //     'email' => $this->data['email'],
-        // ]);
-
-        return new Contact();
+         return Contact::firstOrNew([
+             'email' => $this->data['email'],
+         ], [
+             'name' => $this->data['name'],
+             'location' => $this->data['location'],
+             'phone_number' => $this->data['phone_number'],
+         ]);
     }
 
     public static function getCompletedNotificationBody(Import $import): string

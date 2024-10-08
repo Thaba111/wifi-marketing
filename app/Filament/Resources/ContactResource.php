@@ -30,6 +30,10 @@ class ContactResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationGroup = 'Contacts';
+
+    protected static ?int $navigationSort = 1;
+
     public static function form(Form $form): Form
     {
         return $form
@@ -64,7 +68,9 @@ class ContactResource extends Resource
                 Tables\Columns\TextColumn::make('name')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('email')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('phone_number')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('location')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('location')
+                    ->wrap()
+                    ->sortable()->searchable(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -78,11 +84,15 @@ class ContactResource extends Resource
              ])
             ->headerActions([
                 // Import button
-                Tables\Actions\Action::make('import')
+//                Tables\Actions\Action::make('import')
+//                    ->label('Import Contacts')
+//                    ->url(route('contacts.import'))
+//                    ->importer(ContactImporter::class)
+//                    ->color('success'),
+
+                ImportAction::make('import')
                     ->label('Import Contacts')
-                    ->url(route('contacts.import'))
-                    ->importer(ContactImporter::class)
-                    ->color('success'),
+                    ->importer(ContactImporter::class),
     
                 // Export button
                 Tables\Actions\Action::make('export')
