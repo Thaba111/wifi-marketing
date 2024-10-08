@@ -7,7 +7,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ContactController;
-
+use App\Http\Controllers\BannerController;
+use App\Http\Controllers\AdController;
 
 
 Route::get('/', function () {
@@ -47,5 +48,7 @@ Route::get('/admin/contacts/import', [ContactController::class, 'import'])->name
 Route::post('/admin/contacts/import', [ContactController::class, 'importStore'])->name('contacts.import.store');
 Route::get('/admin/contacts/export', [ContactController::class, 'export'])->name('contacts.export');
 
+Route::resource('banners', BannerController::class);
+Route::resource('ads', AdController::class);
 
 require __DIR__.'/auth.php';

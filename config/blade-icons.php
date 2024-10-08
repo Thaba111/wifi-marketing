@@ -7,97 +7,95 @@ return [
     | Icons Sets
     |--------------------------------------------------------------------------
     |
-    | With this config option you can define a couple of
-    | default icon sets. Provide a key name for your icon
-    | set and a combination from the options below.
+    | Define your icon sets here. You can specify a path to your SVG icons and 
+    | other related options for each set.
     |
     */
 
     'sets' => [
 
-         'default' => [
+        'default' => [
 
-             /*
-             |-----------------------------------------------------------------
-             | Icons Path
-             |-----------------------------------------------------------------
-             |
-             | Provide the relative path from your app root to your SVG icons
-             | directory. Icons are loaded recursively so there's no need to
-             | list every sub-directory.
-             |
-             | Relative to the disk root when the disk option is set.
-             |
-             */
+            /*
+            |--------------------------------------------------------------------------
+            | Icons Path
+            |--------------------------------------------------------------------------
+            |
+            | Provide the relative path from your app root to your SVG icons directory.
+            | Icons are loaded recursively, so you don’t need to list sub-directories.
+            |
+            | Ensure this path exists in your application and contains SVG files.
+            |
+            */
 
-             'path' => 'resources/svg',
+            'path' => 'resources/svg',  // Make sure this folder exists and contains your SVG files.
 
-             /*
-             |-----------------------------------------------------------------
-             | Filesystem Disk
-             |-----------------------------------------------------------------
-             |
-             | Optionally, provide a specific filesystem disk to read
-             | icons from. When defining a disk, the "path" option
-             | starts relatively from the disk root.
-             |
-             */
+            /*
+            |--------------------------------------------------------------------------
+            | Filesystem Disk
+            |--------------------------------------------------------------------------
+            |
+            | Optionally, provide a specific filesystem disk to read icons from.
+            | When defining a disk, the "path" option starts relatively from the disk root.
+            |
+            | Leave it empty to use the default filesystem.
+            |
+            */
 
-             'disk' => '',
+            'disk' => '',
 
-             /*
-             |-----------------------------------------------------------------
-             | Default Prefix
-             |-----------------------------------------------------------------
-             |
-             | This config option allows you to define a default prefix for
-             | your icons. The dash separator will be applied automatically
-             | to every icon name. It's required and needs to be unique.
-             |
-             */
+            /*
+            |--------------------------------------------------------------------------
+            | Default Prefix
+            |--------------------------------------------------------------------------
+            |
+            | This is the prefix that will be applied to all icons in this set.
+            | The dash separator will be automatically applied to every icon name.
+            | Make sure this prefix is unique to avoid conflicts.
+            |
+            */
 
-             'prefix' => 'icon',
+            'prefix' => 'icon',  // You can change this to a different prefix if needed.
 
-             /*
-             |-----------------------------------------------------------------
-             | Fallback Icon
-             |-----------------------------------------------------------------
-             |
-             | This config option allows you to define a fallback
-             | icon when an icon in this set cannot be found.
-             |
-             */
+            /*
+            |--------------------------------------------------------------------------
+            | Fallback Icon
+            |--------------------------------------------------------------------------
+            |
+            | Define a fallback icon in case a specific icon cannot be found.
+            | If left empty, no fallback will be used.
+            |
+            */
 
-             'fallback' => '',
+            'fallback' => '',  // Specify a fallback icon if necessary, e.g., 'icon-default'.
 
-             /*
-             |-----------------------------------------------------------------
-             | Default Set Classes
-             |-----------------------------------------------------------------
-             |
-             | This config option allows you to define some classes which
-             | will be applied by default to all icons within this set.
-             |
-             */
+            /*
+            |--------------------------------------------------------------------------
+            | Default Set Classes
+            |--------------------------------------------------------------------------
+            |
+            | These classes will be applied to all icons within this set by default.
+            | You can add any global classes you need here, like `text-gray-500`.
+            |
+            */
 
-             'class' => '',
+            'class' => '',
 
-             /*
-             |-----------------------------------------------------------------
-             | Default Set Attributes
-             |-----------------------------------------------------------------
-             |
-             | This config option allows you to define some attributes which
-             | will be applied by default to all icons within this set.
-             |
-             */
+            /*
+            |--------------------------------------------------------------------------
+            | Default Set Attributes
+            |--------------------------------------------------------------------------
+            |
+            | These attributes will be applied to all icons in this set.
+            | For example, you can set width or height here for all icons.
+            |
+            */
 
-             'attributes' => [
-                 // 'width' => 50,
-                 // 'height' => 50,
-             ],
-
-         ],
+            'attributes' => [
+                // 'width' => 50,
+                // 'height' => 50,
+            ],
+        ],
 
     ],
 
@@ -106,8 +104,8 @@ return [
     | Global Default Classes
     |--------------------------------------------------------------------------
     |
-    | This config option allows you to define some classes which
-    | will be applied by default to all icons.
+    | These classes will be applied to all icons in all sets globally.
+    | Useful if you want to add global styles to all icons.
     |
     */
 
@@ -118,8 +116,8 @@ return [
     | Global Default Attributes
     |--------------------------------------------------------------------------
     |
-    | This config option allows you to define some attributes which
-    | will be applied by default to all icons.
+    | These attributes will be applied to all icons globally.
+    | Can be useful for global settings like size, width, etc.
     |
     */
 
@@ -133,51 +131,47 @@ return [
     | Global Fallback Icon
     |--------------------------------------------------------------------------
     |
-    | This config option allows you to define a global fallback
-    | icon when an icon in any set cannot be found. It can
-    | reference any icon from any configured set.
+    | Define a global fallback icon when an icon in any set cannot be found.
+    | It can reference any icon from any configured set.
     |
     */
 
-    'fallback' => '',
+    'fallback' => '',  // You can specify a global fallback here if necessary.
 
     /*
     |--------------------------------------------------------------------------
     | Components
     |--------------------------------------------------------------------------
     |
-    | These config options allow you to define some
-    | settings related to Blade Components.
+    | Configure settings related to Blade Components for icons.
     |
     */
 
     'components' => [
 
         /*
-        |----------------------------------------------------------------------
+        |--------------------------------------------------------------------------
         | Disable Components
-        |----------------------------------------------------------------------
+        |--------------------------------------------------------------------------
         |
-        | This config option allows you to disable Blade components
-        | completely. It's useful to avoid performance problems
-        | when working with large icon libraries.
+        | If you set this option to true, Blade components for icons will be disabled.
+        | This can be useful for performance improvements when dealing with large icon sets.
         |
         */
 
         'disabled' => false,
 
         /*
-        |----------------------------------------------------------------------
+        |--------------------------------------------------------------------------
         | Default Icon Component Name
-        |----------------------------------------------------------------------
+        |--------------------------------------------------------------------------
         |
-        | This config option allows you to define the name
-        | for the default Icon class component.
+        | Specify the default component name to use when rendering icons.
+        | This will be the base name for icons, so use `icon` unless you need something different.
         |
         */
 
         'default' => 'icon',
 
     ],
-
 ];
