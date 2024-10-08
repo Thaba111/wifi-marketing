@@ -15,7 +15,12 @@ use App\Filament\Resources\ContactResource\Pages;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ContactsExport;
+use App\Filament\Imports\ContactImporter;
+use Filament\Tables\Actions\ImportAction;
 use App\Imports\ContactsImport;
+
+
+
 
 
 
@@ -29,13 +34,13 @@ class ContactResource extends Resource
     {
         return $form
         ->schema([
-            Forms\Components\Select::make('segment_id')
-                ->label('Segment')
-                ->hiddenOn('edit')
-                ->searchable()
-                ->columnSpanFull()
-                ->options(fn () => Segment::pluck('name', 'id'))
-                ->required(),
+            // Forms\Components\Select::make('segment_id')
+            //     ->label('Segment')
+            //     ->hiddenOn('edit')
+            //     ->searchable()
+            //     ->columnSpanFull()
+            //     ->options(fn () => Segment::pluck('name', 'id'))
+            //     ->required(),
             Forms\Components\TextInput::make('name')
                 ->required()
                 ->maxLength(255),
@@ -76,6 +81,7 @@ class ContactResource extends Resource
                 Tables\Actions\Action::make('import')
                     ->label('Import Contacts')
                     ->url(route('contacts.import'))
+                    ->importer(ContactImporter::class)
                     ->color('success'),
     
                 // Export button

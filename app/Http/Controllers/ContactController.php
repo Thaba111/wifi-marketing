@@ -16,16 +16,16 @@ class ContactController extends Controller
     
     public function index()
     {
-        $contacts = Contact::with('segment')->get();
+        $contacts = Contact::with('segments')->get();
         return view('contacts.index', compact('contacts'));
     }
 
     public function show($id)
     {
         $contact = Contact::find($id);
-        $segment = $contact->segment; 
+        $segment = $contact->segments; 
 
-        return view('contacts.show', compact('contact', 'segment'));
+        return view('contacts.show', compact('contact', 'segments'));
     }
 
 
@@ -78,7 +78,6 @@ class ContactController extends Controller
         return redirect()->route('contacts.index')->with('success', 'Contact deleted successfully.');
     }
 
-   // In your ContactController
 
     public function import()
     {
