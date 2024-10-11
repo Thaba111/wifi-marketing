@@ -19,4 +19,9 @@ class Campaign extends Model
     {
         return $this->hasMany(AutomationRule::class);
     }
+
+    public function reports()
+    {
+        return $this->hasMany(CampaignReport::class);
+    }
 }

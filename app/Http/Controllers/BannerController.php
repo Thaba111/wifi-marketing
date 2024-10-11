@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Banner;
 use Illuminate\Http\Request;
+use App\Models\BannerImpression;
+
+
+
 
 class BannerController extends Controller
 {
@@ -66,5 +70,12 @@ class BannerController extends Controller
         $banner->delete();
         return redirect()->route('banners.index')->with('success', 'Banner deleted successfully!');
     }
+
+    public function bannerReports($banner_id)
+{
+    $reports = BannerImpression::where('banner_id', $banner_id)->get();
+    return view('banners.reports', compact('reports'));
+}
+
 }
 

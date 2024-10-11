@@ -91,4 +91,26 @@ class AdController extends Controller
         $ad->delete();
         return redirect()->route('ads.index')->with('success', 'Ad deleted successfully!');
     }
+
+    public function trackCampaignPerformance($campaign_id, $clicks, $opens, $conversions)
+    {
+        $report = new CampaignReport();
+        $report->campaign_id = $campaign_id;
+        $report->clicks = $clicks;
+        $report->opens = $opens;
+        $report->conversions = $conversions;
+        $report->report_date = now()->toDateString(); // Use the current date
+        $report->save();
+    
+        return response()->json(['message' => 'Campaign performance tracked successfully!']);
+    }
+
+    public function campaignReports($campaign_id)
+{
+    $reports = CampaignReport::where('campaign_id', $campaign_id)->get();
+    return view('campaigns.reports', compact('reports'));
+}
+
+    
+
 }
