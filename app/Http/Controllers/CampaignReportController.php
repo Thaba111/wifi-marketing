@@ -18,8 +18,9 @@ class CampaignReportController extends Controller
     }
     public function show($id)
     {
-        $report = CampaignReport::with('campaign')->findOrFail($id);
+        $report = CampaignReport::find($id); // Fetching by ID
+        $clicks = $report->clicks; 
 
-        return view('campaign_reports.show', compact('report'));
+        return view('report.show', compact('report', 'clicks'));
     }
 }

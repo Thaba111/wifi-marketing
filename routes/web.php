@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\AdController;
+use App\Http\Controllers\BannerImpressionController;
+
 
 
 Route::get('/', function () {
@@ -48,5 +50,7 @@ Route::get('/admin/contacts/export', [ContactController::class, 'export'])->name
 
 Route::resource('banners', BannerController::class);
 Route::resource('ads', AdController::class);
+Route::get('/banner-impressions', [BannerImpressionController::class, 'index'])->name('banner.impressions.index');
+
 
 require __DIR__.'/auth.php';

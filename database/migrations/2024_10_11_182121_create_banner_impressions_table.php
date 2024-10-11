@@ -13,13 +13,10 @@ return new class extends Migration
     {
         Schema::create('banner_impressions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('banner_id'); // Reference to banners table
-            $table->integer('impressions')->default(0); // Total impressions
-            $table->integer('clicks')->default(0); // Total clicks
+            $table->foreignId('banner_id')->constrained('banners')->onDelete('cascade'); // Foreign key to banners table
+            $table->integer('impressions'); 
+            $table->integer('clicks'); 
             $table->timestamps();
-
-             // Foreign key constraint
-             $table->foreign('banner_id')->references('id')->on('banners')->onDelete('cascade');
         });
     }
 
