@@ -8,9 +8,6 @@ use Filament\Forms;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Columns\TextColumn;
 
 class CampaignReportResource extends Resource
@@ -22,65 +19,61 @@ class CampaignReportResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-chart-bar';
 
+    /**
+     * Disable form creation and editing, only allow viewing the chart.
+     */
     public static function form(Forms\Form $form): Forms\Form
     {
         return $form->schema([
-            TextInput::make('clicks')
-                ->label('Clicks')
-                ->required()
-                ->numeric(),
-            TextInput::make('opens')
-                ->label('Opens')
-                ->required()
-                ->numeric(),
-            TextInput::make('conversions')
-                ->label('Conversions')
-                ->required()
-                ->numeric(),
-            DatePicker::make('report_date')
-                ->label('Report Date')
-                ->required(),
+            Forms\Components\View::make('components.charts.campaign_performance') // Add chart component
+                ->data([
+                    'clicks' => $form->getRecord()->clicks,    // Fetch the record's clicks
+                    'opens' => $form->getRecord()->opens,      // Fetch the record's opens
+                    'conversions' => $form->getRecord()->conversions,  // Fetch the record's conversions
+                ]),
         ]);
     }
 
+    /**
+     * Display the table without the option to create or edit.
+     */
     public static function table(Tables\Table $table): Tables\Table
     {
         return $table
             ->columns([
-                TextColumn::make('id')->label('ID')->sortable(),
-                TextColumn::make('campaign.title')->label('Campaign')->sortable()->searchable(),
+                // TextColumn::make('id')->label('ID')->sortable(),
+                // TextColumn::make('campaign.title')->label('Campaign')->sortable()->searchable(),
                 TextColumn::make('clicks')->label('Clicks')->sortable(),
                 TextColumn::make('opens')->label('Opens')->sortable(),
                 TextColumn::make('conversions')->label('Conversions')->sortable(),
                 TextColumn::make('report_date')
                     ->label('Report Date')
-                    ->date() // This formats the date
+                    ->date() // Format the date
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->label('Created At')
-                    ->dateTime() // This formats the date and time
+                    ->dateTime() // Format date and time
                     ->sortable(),
             ])
-            ->filters([
-                //
-            ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ViewAction::make(), // Only allow viewing the record
+                // Remove Edit and Delete actions
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([ 
-                    Tables\Actions\DeleteBulkAction::make(),
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(), // Allow bulk delete if needed
                 ]),
             ]);
     }
 
+    /**
+     * Pages to define routes for listing and viewing campaign reports.
+     */
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListCampaignReports::route('/'),
-            'create' => Pages\CreateCampaignReport::route('/create'),
-            'edit' => Pages\EditCampaignReport::route('/{record}/edit'),
+            'index' => Pages\ListCampaignReports::route('/'), // List reports
+            // 'view' => Pages\ViewCampaignReport::route('/{record}'), // View report and charts
         ];
     }
 }

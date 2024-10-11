@@ -42,8 +42,6 @@ Route::post('/admin/suspend/{id}', [AdminController::class, 'suspendUser'])->nam
 Route::post('/admin/unsuspend/{id}', [AdminController::class, 'unsuspendUser'])->name('admin.unsuspend');
 
 Route::resource('contacts', ContactController::class);
-// Route::post('contacts/import', [ContactController::class, 'import'])->name('contacts.import');
-// Route::get('contacts/export', [ContactController::class, 'export'])->name('contacts.export');
 Route::get('/admin/contacts/import', [ContactController::class, 'import'])->name('contacts.import');
 Route::post('/admin/contacts/import', [ContactController::class, 'importStore'])->name('contacts.import.store');
 Route::get('/admin/contacts/export', [ContactController::class, 'export'])->name('contacts.export');
