@@ -3,15 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\BannerImpression;
+use Illuminate\Http\Request;
 
 class BannerImpressionController extends Controller
 {
-    public function index()
+    public function recordClick($bannerId)
     {
-        // Fetch all banner impressions
-        $bannerImpressions = BannerImpression::with('banner')->get();
+        // Find the banner impression or create a new one
+        $bannerImpression = BannerImpression::firstOrNew(['banner_id' => $bannerId]);
 
-        // Return view with data
-        return view('banner_impressions.index', compact('bannerImpressions'));
+        // Increment the clicks
+        $bannerImpression->clicks += 1; 
+        $bannerImpression->impressions += 1; 
+        $bannerImpression->save(); 
+
+        return response()->json(['success' => true]);
     }
 }

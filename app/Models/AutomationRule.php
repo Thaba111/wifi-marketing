@@ -11,9 +11,9 @@ class AutomationRule extends Model
     
     protected $fillable = ['campaign_id', 'rule_criteria'];
 
-    protected $casts = [
-        'rule_criteria' => 'array', // Cast the JSON field to array
-    ];
+    // protected $casts = [
+    //     'rule_criteria' => 'array', // Cast the JSON field to array
+    // ];
 
     public function campaign()
     {

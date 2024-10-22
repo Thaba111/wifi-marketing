@@ -24,4 +24,5 @@ class Campaign extends Model
     {
         return $this->hasMany(CampaignReport::class);
     }
+    
 }

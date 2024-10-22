@@ -7,6 +7,7 @@
     "require": {
         "php": "^8.2",
         "blade-ui-kit/blade-icons": "*",
+        "drewm/mailchimp-api": "*",
         "filament/actions": "^3.2",
         "filament/filament": "^3.2",
         "filament/notifications": "^3.2",
@@ -14,7 +15,11 @@
         "laravel/tinker": "^2.9",
         "laravel/ui": "^4.5",
         "maatwebsite/excel": "^3.1",
-        "spatie/laravel-permission": "^6.9"
+        "spatie/laravel-permission": "^6.9",
+        "symfony/http-client": "*",
+        "symfony/mailgun-mailer": "*",
+        "symfony/postmark-mailer": "*",
+        "twilio/sdk": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
@@ -63,6 +68,7 @@
     },
     "config": {
         "optimize-autoloader": true,
+        "process-timeout": 2000,
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {

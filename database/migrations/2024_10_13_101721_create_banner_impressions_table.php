@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('banner_impressions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('banner_id')->constrained('banners')->onDelete('cascade'); // Foreign key to banners table
-            $table->integer('impressions'); 
-            $table->integer('clicks'); 
+            $table->foreignId('banner_id')->constrained()->onDelete('cascade');
+            // $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null'); // Optional user tracking
+            $table->unsignedInteger('impressions')->default(0);
+            $table->unsignedInteger('clicks')->default(0);
             $table->timestamps();
         });
     }

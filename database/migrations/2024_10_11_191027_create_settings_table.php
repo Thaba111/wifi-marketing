@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('campaign_reports', function (Blueprint $table) {
+        Schema::create('settings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('campaign_id')->constrained()->onDelete('cascade');
-            $table->integer('clicks')->default(0);
-            $table->integer('opens')->default(0);
-            $table->integer('conversions')->default(0);
-            $table->date('report_date');
+            $table->string('key')->unique(); 
+            $table->text('value'); 
             $table->timestamps();
         });
     }
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('campaign_reports');
+        Schema::dropIfExists('settings');
     }
 };

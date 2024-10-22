@@ -20,6 +20,10 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
+use App\Models\BannerImpression;
+use Illuminate\Support\Facades\Log;
+
+
 
 class BannerResource extends Resource
 {
@@ -67,7 +71,13 @@ class BannerResource extends Resource
                 //
             ])
             ->actions([
-                ViewAction::make(),
+                ViewAction::make()
+                ->action(function (Banner $record) {
+                    // Record the click on the impression
+                    self::recordClick($record); // Call the method we added
+                    // Now proceed to the view action, e.g., redirecting to the target URL
+                    return redirect($record->target_url); // Redirect to the target URL
+                }),
                 EditAction::make(),
                 DeleteAction::make(),
             ])
@@ -84,6 +94,48 @@ class BannerResource extends Resource
             //
         ];
     }
+
+    public static function getActions(): array
+    {
+        return [
+            // Existing actions...
+            Tables\Actions\Action::make('Record Click')
+                ->action(function (Banner $record) {
+                    // This method will be called when the button is clicked
+                    $this->recordClick($record);
+                })
+                ->icon('heroicon-o-eye'), // You can change the icon
+        ];
+    }
+
+    protected function recordClick(Banner $banner)
+{
+    Log::info('recordClick method called for banner ID: ' . $banner->id); 
+
+    try {
+        // Find or create the impression record
+        $impression = BannerImpression::firstOrNew(['banner_id' => $banner->id]);
+        
+        // Increment the clicks and impressions
+        $impression->clicks += 1;
+        $impression->impressions += 1; // Increment impressions if required
+        $impression->save(); // Save the record
+
+        // Optional: Log success message
+        Log::info('Banner impression recorded successfully.', [
+            'banner_id' => $banner->id,
+            'clicks' => $impression->clicks,
+        ]);
+    } catch (\Exception $e) {
+        // Log the error for debugging
+        Log::error('Failed to record banner impression.', [
+            'banner_id' => $banner->id,
+            'error' => $e->getMessage(),
+        ]);
+    }
+}
+
+
 
     public static function getPages(): array
     {

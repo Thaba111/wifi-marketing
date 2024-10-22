@@ -5,12 +5,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\AdController;
 use App\Http\Controllers\BannerImpressionController;
-
 
 
 Route::get('/', function () {
@@ -50,7 +48,12 @@ Route::get('/admin/contacts/export', [ContactController::class, 'export'])->name
 
 Route::resource('banners', BannerController::class);
 Route::resource('ads', AdController::class);
-Route::get('/banner-impressions', [BannerImpressionController::class, 'index'])->name('banner.impressions.index');
+Route::post('/banners/click/{bannerId}', [BannerController::class, 'clickBanner'])->name('banners.click');
+Route::get('/banners/{banner}/analytics', [BannerController::class, 'bannerAnalytics'])
+     ->name('banners.analytics');
+Route::post('/record-click/{banner}', [BannerImpressionController::class, 'recordClick']);
+Route::post('/record-click/{banner}', [BannerController::class, 'recordClick']);
+Route::post('/record-click/{bannerId}', [BannerController::class, 'recordClick']);
 
 
 require __DIR__.'/auth.php';

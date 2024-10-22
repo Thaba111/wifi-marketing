@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Banner;
 use Illuminate\Http\Request;
 use App\Models\BannerImpression;
+use Illuminate\Support\Facades\DB; 
 
 
 
@@ -71,11 +72,42 @@ class BannerController extends Controller
         return redirect()->route('banners.index')->with('success', 'Banner deleted successfully!');
     }
 
-    public function bannerReports($banner_id)
-{
-    $reports = BannerImpression::where('banner_id', $banner_id)->get();
-    return view('banners.reports', compact('reports'));
-}
+    public function clickBanner(Request $request, $bannerId)
+    {
+       
+        $banner = Banner::findOrFail($bannerId);
+
+       
+        $impression = BannerImpression::create([
+            'banner_id' => $banner->id,
+            'impressions' => 1,
+            'clicks' => 1, // Assuming this is the first click
+        ]);
+
+        
+        return redirect()->to($banner->target_url);
+    }
+
+    public function recordClick($id)
+    {
+        
+        $banner = Banner::findOrFail($id);
+        
+        $impression = BannerImpression::updateOrCreate(
+            ['banner_id' => $banner->id],
+            ['clicks' => DB::raw('clicks + 1')]
+        );
+
+        return response()->json(['success' => true, 'impression' => $impression]);
+    }
+
+
+//     public function bannerReports($banner_id)
+// {
+//     $reports = BannerImpression::where('banner_id', $banner_id)->get();
+//     return view('banners.reports', compact('reports'));
+// }
+
 
 }
 
