@@ -12,8 +12,21 @@ class EditSetting extends EditRecord
 
     protected function getHeaderActions(): array
     {
+        
         return [
             Actions\DeleteAction::make(),
+        ];
+    }
+
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        if (!isset($data['key']) || !isset($data['value'])) {
+            throw new \Exception('Both key and value fields are required.');
+        }
+
+        return [
+            'key' => $data['key'],
+            'value' => $data['value'],
         ];
     }
 }
