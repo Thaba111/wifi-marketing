@@ -63,4 +63,9 @@ class User extends Authenticatable
     {
         return $query->where('role', UserTypes::VIEWER);
     }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin'; 
+    }
 }

@@ -9,6 +9,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\AdController;
 use App\Http\Controllers\BannerImpressionController;
+use App\Http\Controllers\SettingController;
 
 
 Route::get('/', function () {
@@ -55,5 +56,13 @@ Route::post('/record-click/{banner}', [BannerImpressionController::class, 'recor
 Route::post('/record-click/{banner}', [BannerController::class, 'recordClick']);
 Route::post('/record-click/{bannerId}', [BannerController::class, 'recordClick']);
 
+// Route for displaying the settings index
+Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
+
+// Route for displaying the form to create a new setting
+Route::get('/settings/create', [SettingController::class, 'create'])->name('settings.create');
+
+// Route for storing a new setting
+Route::post('/settings', [SettingController::class, 'store'])->name('settings.store');
 
 require __DIR__.'/auth.php';
