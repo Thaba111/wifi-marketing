@@ -10,6 +10,8 @@ use App\Http\Controllers\BannerController;
 use App\Http\Controllers\AdController;
 use App\Http\Controllers\BannerImpressionController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\CaptivePortalController;
+
 
 
 Route::get('/', function () {
@@ -56,13 +58,13 @@ Route::post('/record-click/{banner}', [BannerImpressionController::class, 'recor
 Route::post('/record-click/{banner}', [BannerController::class, 'recordClick']);
 Route::post('/record-click/{bannerId}', [BannerController::class, 'recordClick']);
 
-// Route for displaying the settings index
 Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
-
-// Route for displaying the form to create a new setting
 Route::get('/settings/create', [SettingController::class, 'create'])->name('settings.create');
-
-// Route for storing a new setting
 Route::post('/settings', [SettingController::class, 'store'])->name('settings.store');
+
+Route::post('/captive-portal/store', [CaptivePortalController::class, 'store'])->name('captive-portal.store');
+Route::view('/captive-portal/create', 'captive-portal.create');
+
+
 
 require __DIR__.'/auth.php';
