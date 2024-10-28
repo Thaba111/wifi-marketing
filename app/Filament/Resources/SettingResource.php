@@ -7,7 +7,7 @@ use App\Models\Setting;
 use Filament\Forms;
 use Filament\Resources\Resource;
 use Filament\Forms\Components\{
-    TextInput, Textarea, Repeater
+    TextInput, Repeater
 };
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
@@ -29,10 +29,10 @@ class SettingResource extends Resource
                     ->unique(Setting::class, 'key')
                     ->maxLength(255),
 
-                Repeater::make('value')
+                Repeater::make('value')  
                     ->label('Setting Values')
                     ->schema([
-                        TextInput::make('value')
+                        TextInput::make('value')  // Keep this as it is to represent each value
                             ->label('Value')
                             ->required()
                     ])
@@ -50,9 +50,9 @@ class SettingResource extends Resource
                     ->sortable()
                     ->searchable(),
 
-                TextColumn::make('value')
-                    ->label('Setting Value')
-                    ->formatStateUsing(fn ($state) => is_array($state) ? implode(', ', $state) : $state)
+                TextColumn::make('values')  // Updated to 'values'
+                    ->label('Setting Values')
+                    ->formatStateUsing(fn ($state) => is_array($state) ? implode(', ', array_column($state, 'value')) : $state)
                     ->sortable(),
 
                 TextColumn::make('created_at')

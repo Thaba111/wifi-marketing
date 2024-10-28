@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Setting; 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class SettingController extends Controller
 {
@@ -15,6 +16,7 @@ class SettingController extends Controller
         return $setting;
     });
 
+   
     return view('settings.index', compact('settings'));
 }
     public function create()
@@ -22,25 +24,38 @@ class SettingController extends Controller
         return view('settings.create');
     }
 
+    
+    
     public function store(Request $request)
-{
-    $validatedData = $request->validate([
-        'key' => 'required|string|max:255|unique:settings,key',
-        'value' => 'required|array', // Validate that value is an array
-    ]);
+    {
+        // Debug the incoming request data
+        Log::info($request->all());
+    
+        $request->validate([
+            'key' => 'required|string|unique:settings,key',
+            'value' => 'required|string',
+        ]);
+    
+        // Ensure 'value' is a string
+        $value = is_array($request->value) ? json_encode($request->value) : $request->value;
+    
+        Setting::create([
+            'key' => $request->key,
+            'value' => $value,
+        ]);
+    
+        return redirect()->route('settings.index')->with('success', 'Setting created successfully.');
+    }
+   
 
-    // Serialize the array of values into a string
-    $validatedData['value'] = serialize($validatedData['value']);
-
-    Setting::create($validatedData);
-    return redirect()->route('settings.index')->with('success', 'Setting added successfully.');
-}
-    public function edit($id)
+public function edit($id)
     {
         $setting = Setting::findOrFail($id);
         return view('settings.edit', compact('setting'));
     }
 
+   
+   
     public function update(Request $request, $id)
     {
         $setting = Setting::findOrFail($id);
@@ -54,6 +69,8 @@ class SettingController extends Controller
         return redirect()->route('settings.index')->with('success', 'Setting updated successfully.');
     }
 
+   
+   
     public function destroy($id)
     {
         $setting = Setting::findOrFail($id);

@@ -1,32 +1,24 @@
+{{-- resources/views/settings/create.blade.php --}}
 @extends('layouts.app')
 
 @section('content')
 <div class="container">
-    <h1>Create New Setting</h1>
-
-    @if (session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
+    <h1>Add New Setting</h1>
 
     <form action="{{ route('settings.store') }}" method="POST">
         @csrf
-        <div class="mb-3">
-            <label for="key" class="form-label">Key</label>
-            <input type="text" class="form-control" id="key" name="key" value="{{ old('key') }}">
-            @error('key')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
+        <div class="form-group">
+            <label for="key">Key</label>
+            <input type="text" name="key" id="key" class="form-control" required>
         </div>
-        <div class="mb-3">
-            <label for="value" class="form-label">Value</label>
-            <textarea class="form-control" id="value" name="value">{{ old('value') }}</textarea>
-            @error('value')
-                <div class="text-danger">{{ $message }}</div>
-            @enderror
+        <div class="form-group">
+            <label for="value">Value (array input, comma-separated)</label>
+            <input type="text" name="value[]" id="value" class="form-control" required>
+            <input type="text" name="value[]" class="form-control" placeholder="Another value (optional)">
+            <input type="text" name="value[]" class="form-control" placeholder="Another value (optional)">
+            <small class="form-text text-muted">You can enter multiple values separated by commas.</small>
         </div>
-        <button type="submit" class="btn btn-primary">Save Setting</button>
+        <button type="submit" class="btn btn-primary">Add Setting</button>
     </form>
 </div>
 @endsection
