@@ -4,55 +4,60 @@ namespace App\Http\Controllers;
 
 use App\Models\Setting; 
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
 
 class SettingController extends Controller
 {
-    /**
-     * Show the form for creating a new setting.
-     *
-     * @return \Illuminate\View\View
-     */
+    public function index()
+{
+    $settings = Setting::all()->map(function ($setting) {
+        // Unserialize the string back into an array
+        $setting->value = unserialize($setting->value);
+        return $setting;
+    });
+
+    return view('settings.index', compact('settings'));
+}
     public function create()
     {
-        return view('settings.create'); 
+        return view('settings.create');
     }
 
-    /**
-     * Store a newly created setting in the database.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function store(Request $request)
+{
+    $validatedData = $request->validate([
+        'key' => 'required|string|max:255|unique:settings,key',
+        'value' => 'required|array', // Validate that value is an array
+    ]);
+
+    // Serialize the array of values into a string
+    $validatedData['value'] = serialize($validatedData['value']);
+
+    Setting::create($validatedData);
+    return redirect()->route('settings.index')->with('success', 'Setting added successfully.');
+}
+    public function edit($id)
     {
-        // Validate incoming data
+        $setting = Setting::findOrFail($id);
+        return view('settings.edit', compact('setting'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $setting = Setting::findOrFail($id);
+
         $validatedData = $request->validate([
-            'key' => 'nullable|string|max:255|unique:settings,key',
-            'value' => 'nullable|string',
+            'key' => 'required|string|max:255|unique:settings,key,' . $setting->id,
+            'value' => 'required|string',
         ]);
 
-        // Create the setting
-        $setting = Setting::create($validatedData);
-
-        // Store the newly created setting in the session
-        session(['new_setting' => [
-            'key' => $setting->key,
-            'value' => $setting->value,
-        ]]);
-
-        // Redirect to settings index with success message
-        return redirect()->route('settings.index')->with('success', 'Setting added successfully.');
+        $setting->update($validatedData);
+        return redirect()->route('settings.index')->with('success', 'Setting updated successfully.');
     }
 
-    /**
-     * Show the list of settings with additional details.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function index()
+    public function destroy($id)
     {
-        $settings = Setting::all();
-        return view('settings.index', compact('settings')); 
+        $setting = Setting::findOrFail($id);
+        $setting->delete();
+        return redirect()->route('settings.index')->with('success', 'Setting deleted successfully.');
     }
 }
