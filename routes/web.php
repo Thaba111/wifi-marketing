@@ -62,9 +62,15 @@ Route::get('/settings', [SettingController::class, 'index'])->name('settings.ind
 Route::get('/settings/create', [SettingController::class, 'create'])->name('settings.create');
 Route::post('/settings', [SettingController::class, 'store'])->name('settings.store');
 
+
+Route::get('/captive-portal/brew-heaven', [CaptivePortalController::class, 'showBrewHeaven'])->name('captive-portal.brew-heaven');
+Route::get('/captive-portal/flavor-fusion', [CaptivePortalController::class, 'showFlavorFusion'])->name('captive-portal.flavor-fusion');
+Route::get('/captive-portal/mamas-sauce', [CaptivePortalController::class, 'showMamasSauce'])->name('captive-portal.mamas-sauce');
+
 Route::post('/captive-portal/store', [CaptivePortalController::class, 'store'])->name('captive-portal.store');
-Route::view('/captive-portal/create', 'captive-portal.create');
 
+Route::post('/captive-portal/connect', [CaptivePortalController::class, 'connect'])->name('captive-portal.connect');
 
+Route::get('/captive-portal/success', [CaptivePortalController::class, 'success'])->name('captive-portal.success');
 
 require __DIR__.'/auth.php';

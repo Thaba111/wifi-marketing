@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Captive Portal</title>
+    <title>Flavor Fusion</title>
    
     <style>
         
@@ -39,17 +39,7 @@
             gap: 20px;
         }
 
-        .language-selector {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 14px;
-        }
-
-        .language-selector img {
-            margin-right: 5px;
-            vertical-align: middle;
-        }
+       
 
         h2 {
             font-size: 28px; 
@@ -136,7 +126,7 @@
             }
 
             h2 {
-                font-size: 24px;
+                font-size: 34px;
             }
 
             .promo {
@@ -163,7 +153,7 @@
             }
 
             h2 {
-                font-size: 20px;
+                font-size: 24px;
             }
 
             .promo {
@@ -174,22 +164,18 @@
                 font-size: 16px;
             }
 
-            .language-selector {
-                position: static;
-                text-align: center;
-                margin-top: 10px;
-            }
+            
         }
     </style>
 </head>
 <body>
 
 <div class="form-container">
-    <div class="language-selector">
+    <!-- <div class="language-selector">
         <img src="/images/flag-en.png" alt="English" width="20" height="15"> EN | 
         <img src="/images/flag-fr.png" alt="French" width="20" height="15"> FR | 
         <img src="/images/flag-es.png" alt="Spanish" width="20" height="15"> ES
-    </div>
+    </div> -->
 
     <div class="menu-button">
         Order Now<br>Menu
@@ -200,8 +186,8 @@
 
     <div class="promo">Subscribe to our newsletter and get 15% discount</div>
 
-    <form method="POST" action="{{ route('captive-portal.store') }}">
-        @csrf
+    <form action="{{ route('captive-portal.store') }}" method="POST">
+    @csrf
         <div class="checkbox-container">
             <label>
                 <input type="checkbox" name="consent" required>
