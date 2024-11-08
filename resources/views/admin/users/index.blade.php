@@ -20,7 +20,6 @@
                     <td>{{ $contact->phone_number }}</td>
                     <td>{{ $contact->location }}</td>
                     <td>
-                        <!-- Add action buttons (edit, delete) here -->
                     </td>
                 </tr>
             @endforeach

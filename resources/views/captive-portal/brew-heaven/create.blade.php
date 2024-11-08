@@ -109,6 +109,22 @@
         .footer-logo img {
             width: 40px;
         }
+
+
+        .input-field {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+
+        .input-field::placeholder {
+            color: #ccc;
+        }
     </style>
 </head>
 <body>
@@ -125,6 +141,10 @@
 
         <form action="{{ route('captive-portal.store') }}" method="POST">
         @csrf
+
+         <!-- Name and Email Fields -->
+         <input type="text" name="name" class="input-field" placeholder="Enter your name" required>
+            <input type="email" name="email" class="input-field" placeholder="Enter your email" required>
 
         <div class="checkbox-container">
             <label><input type="checkbox"> I agree with the Terms of Use</label>

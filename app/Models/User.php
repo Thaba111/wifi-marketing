@@ -23,6 +23,8 @@ class User extends Authenticatable
         'password',
         'role',
         'status',
+        'auth_provider',
+        'auth_provider_id',
     ];
 
     /**
@@ -49,23 +51,23 @@ class User extends Authenticatable
         ];
     }
 
-    public function scopeAdmins($query)
-    {
-        return $query->where('role', UserTypes::ADMIN);
-    }
+//     public function scopeAdmins($query)
+//     {
+//         return $query->where('role', UserTypes::ADMIN);
+//     }
 
-    public function scopeMarketers($query)
-    {
-        return $query->where('role', UserTypes::MARKETER);
-    }
+//     public function scopeMarketers($query)
+//     {
+//         return $query->where('role', UserTypes::MARKETER);
+//     }
 
-    public function scopeViewers($query)
-    {
-        return $query->where('role', UserTypes::VIEWER);
-    }
+//     public function scopeViewers($query)
+//     {
+//         return $query->where('role', UserTypes::VIEWER);
+//     }
 
-    public function isAdmin(): bool
-    {
-        return $this->role === 'admin'; 
-    }
+//     public function isAdmin()
+// {
+//     return $this->role === 'admin'; 
+// }
 }

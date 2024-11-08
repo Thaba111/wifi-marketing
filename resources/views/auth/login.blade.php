@@ -32,16 +32,19 @@
             </label>
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
+        <!-- social login -->
+        <div class="mt-6 text-center">
+            <a href="{{ route('auth.redirection', ['provider' => 'google']) }}" class="inline-flex items-center px-6 py-3 bg-gray-100 text-gray-700 rounded-md border border-gray-300 hover:bg-gray-200 focus:ring-2 focus:ring-gray-300 focus:outline-none">
+                <img src="/images/google-icon.png" alt="Google Icon" class="h-5 w-5 mr-2">
+                {{ __('Log in with Google') }}
+            </a>
+        </div>
 
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
+        <div class="mt-6 text-center">
+            <a href="{{ route('auth.redirection', ['provider' => 'facebook']) }}" class="inline-flex items-center px-6 py-3 bg-gray-100 text-gray-700 rounded-md border border-gray-300 hover:bg-gray-200 focus:ring-2 focus:ring-gray-300 focus:outline-none">
+                <img src="/images/fb.png" alt="Fb Icon" class="h-5 w-5 mr-2">
+                {{ __('Log in with Facebook') }}
+            </a>
         </div>
     </form>
 </x-guest-layout>

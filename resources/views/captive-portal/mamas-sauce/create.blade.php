@@ -19,7 +19,7 @@
 
         .container {
             width: 375px;
-            background-color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.8); 
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             text-align: center;
@@ -40,7 +40,7 @@
             font-size: 16px;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content:  flex-start;
             text-decoration: none;
         }
 
@@ -70,12 +70,10 @@
 </head>
 <body>
     <div class="container">
-        <!-- Logo Section -->
         <div class="logo">
             <img src="{{ asset('images/mamas-sauce-logo.png') }}" alt="Mama's Sauce Pizza">
         </div>
 
-        <!-- Social Media Buttons  -->
         <a href="#" class="button facebook">
             <img src="\images\fb-icon.png" alt="Facebook Icon">
             Connect with Facebook
@@ -97,7 +95,6 @@
             Connect with SMS
         </a>
 
-        <!-- Terms and Conditions -->
         <div class="footer">
             <a href="#">TERMS AND CONDITIONS</a>
         </div>

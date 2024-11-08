@@ -24,6 +24,24 @@
             align-items: center;
             color: white;
         }
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            color: #ddd;
+            font-size: 16px;
+            box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.2);
+            transition: background 0.3s, border-color 0.3s;
+        }
+
+        .input-field:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.2);
+            border-color: #ff6f3c;
+        }
 
         .form-container {
             background: rgba(0, 0, 0, 0.75); 
@@ -39,7 +57,6 @@
             gap: 20px;
         }
 
-       
 
         h2 {
             font-size: 28px; 
@@ -63,7 +80,7 @@
         }
 
         .menu-button {
-            background-color: black;
+            background-color: rgba(0, 0, 0, 0.85);   
             color: white;
             width: 100px;
             height: 100px;
@@ -72,14 +89,15 @@
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            text-transform: uppercase;
+            /* text-transform: uppercase; */
             font-size: 14px; 
             position: absolute;
-            left: 10px;
+            left: 1px;
             top: 50%;
-            transform: translateY(-50%);
+            transform: translateY(-110%);
             cursor: pointer;
             text-align: center;
+            
         }
 
         .menu-button:hover {
@@ -164,7 +182,7 @@
                 font-size: 16px;
             }
 
-            
+                       
         }
     </style>
 </head>
@@ -188,7 +206,12 @@
 
     <form action="{{ route('captive-portal.store') }}" method="POST">
     @csrf
-        <div class="checkbox-container">
+       
+    <input type="text" name="name" placeholder="Your Name" class="input-field" required>
+    <input type="email" name="email" placeholder="Your Email" class="input-field" required>
+
+    
+    <div class="checkbox-container">
             <label>
                 <input type="checkbox" name="consent" required>
                 I agree with service Terms and Privacy Policy

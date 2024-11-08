@@ -11,8 +11,11 @@ use App\Http\Controllers\AdController;
 use App\Http\Controllers\BannerImpressionController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\CaptivePortalController;
+use App\Http\Controllers\GoogleAuthController;
+use App\Http\Controllers\SocialiteController;
 
-
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('welcome');
@@ -35,10 +38,12 @@ Route::middleware('guest')->group(function () {
    
     Route::get('register', [RegisterController::class, 'create'])->name('register');
     Route::post('register', [RegisterController::class, 'store']);
-  
+     
+
 });
 Route::post('/logout', function () {
 return redirect('/');})->name('logout');
+
 
 
 Route::post('/admin/suspend/{id}', [AdminController::class, 'suspendUser'])->name('admin.suspend');
@@ -72,5 +77,21 @@ Route::post('/captive-portal/store', [CaptivePortalController::class, 'store'])-
 Route::post('/captive-portal/connect', [CaptivePortalController::class, 'connect'])->name('captive-portal.connect');
 
 Route::get('/captive-portal/success', [CaptivePortalController::class, 'success'])->name('captive-portal.success');
+
+
+// Route::get('auth/google', [GoogleAuthController::class, 'redirect'])->name('google.auth');
+// Route::get('auth/google/call-back', [GoogleAuthController::class, 'handleGoogleCallback']);
+
+Route::controller(SocialiteController::class)->group(function() {
+    Route::get('/auth/redirection/{provider}', 'authProviderRedirect')->name('auth.redirection');
+    Route::get('/auth/{provider}/call-back', 'socialAuthentication')->name('auth.callback');
+});
+
+
+
+
+// Route::get('login/google', [SocialiteController::class, 'redirectToGoogle'])->name('login.google');
+// Route::get('login/google/call-back', [SocialiteController::class, 'handleGoogleCallback']);
+
 
 require __DIR__.'/auth.php';
