@@ -23,6 +23,7 @@ class SocialiteController extends Controller
     // Handle callback from Google
     public function socialAuthentication($provider)
     {
+        
         try {
             // Ensuring stateless to prevent session issues
             $socialUser = Socialite::driver($provider)->user();
@@ -33,7 +34,7 @@ class SocialiteController extends Controller
             if ($user) {
                 // If the user already exists, log them in
                 Auth::login($user);
-                return redirect()->route('dashboard'); // Redirect to the desired route
+                return redirect()->route('/admin'); // Redirect to the desired route
             } else {
                 // If the user doesn't exist, create a new one
                 $userData = User::create([
@@ -46,14 +47,14 @@ class SocialiteController extends Controller
     
                 if ($userData) {
                     Auth::login($userData);
-                    return redirect()->route('dashboard'); // Redirect to the desired route
+                    return redirect()->route('/admin'); 
+                
                 }
             }
     
-            abort(404); // If provider is missing, throw 404 error
+            abort(404); 
     
         } catch (\Exception $e) {
-            // Redirect to login with an error message if authentication fails
             return Redirect::to('/login')->withErrors(['error' => 'Unable to login with ' . ucfirst($provider)]);
         }
     }

@@ -32,19 +32,25 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 });
 
-Route::middleware('guest')->group(function () { 
-    Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
-    Route::post('login', [AuthenticatedSessionController::class, 'store']);
-   
-    Route::get('register', [RegisterController::class, 'create'])->name('register');
-    Route::post('register', [RegisterController::class, 'store']);
-     
+// Redirect 'login' route to captive portal
+Route::get('login', function () {
+    return view('captive-portal.brew-heaven.create');
+})->name('login');
 
-});
+// Existing login logic
+Route::post('login', [AuthenticatedSessionController::class, 'store']);
+
+
+// Route::middleware('guest')->group(function () { 
+//     Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
+//     Route::post('login', [AuthenticatedSessionController::class, 'store']);
+   
+//     Route::get('register', [RegisterController::class, 'create'])->name('register');
+//     Route::post('register', [RegisterController::class, 'store']);
+     
+// });
 Route::post('/logout', function () {
 return redirect('/');})->name('logout');
-
-
 
 Route::post('/admin/suspend/{id}', [AdminController::class, 'suspendUser'])->name('admin.suspend');
 Route::post('/admin/unsuspend/{id}', [AdminController::class, 'unsuspendUser'])->name('admin.unsuspend');
@@ -67,7 +73,6 @@ Route::get('/settings', [SettingController::class, 'index'])->name('settings.ind
 Route::get('/settings/create', [SettingController::class, 'create'])->name('settings.create');
 Route::post('/settings', [SettingController::class, 'store'])->name('settings.store');
 
-
 Route::get('/captive-portal/brew-heaven', [CaptivePortalController::class, 'showBrewHeaven'])->name('captive-portal.brew-heaven');
 Route::get('/captive-portal/flavor-fusion', [CaptivePortalController::class, 'showFlavorFusion'])->name('captive-portal.flavor-fusion');
 Route::get('/captive-portal/mamas-sauce', [CaptivePortalController::class, 'showMamasSauce'])->name('captive-portal.mamas-sauce');
@@ -78,20 +83,16 @@ Route::post('/captive-portal/connect', [CaptivePortalController::class, 'connect
 
 Route::get('/captive-portal/success', [CaptivePortalController::class, 'success'])->name('captive-portal.success');
 
+Route::get('auth/google', [GoogleAuthController::class, 'redirect'])->name('google.auth');
+Route::get('auth/google/call-back', [GoogleAuthController::class, 'handleGoogleCallback']);
 
-// Route::get('auth/google', [GoogleAuthController::class, 'redirect'])->name('google.auth');
-// Route::get('auth/google/call-back', [GoogleAuthController::class, 'handleGoogleCallback']);
-
-Route::controller(SocialiteController::class)->group(function() {
-    Route::get('/auth/redirection/{provider}', 'authProviderRedirect')->name('auth.redirection');
-    Route::get('/auth/{provider}/call-back', 'socialAuthentication')->name('auth.callback');
+Route::middleware(['web'])->group(function () {
+    Route::controller(SocialiteController::class)->group(function () {
+        Route::get('auth/redirection/{provider}', 'authProviderRedirect')->name('auth.redirection');
+        Route::get('auth/{provider}/call-back', 'socialAuthentication')->name('auth.callback');
+    });
 });
 
 
-
-
-// Route::get('login/google', [SocialiteController::class, 'redirectToGoogle'])->name('login.google');
-// Route::get('login/google/call-back', [SocialiteController::class, 'handleGoogleCallback']);
-
-
 require __DIR__.'/auth.php';
+

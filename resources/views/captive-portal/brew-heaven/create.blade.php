@@ -34,8 +34,6 @@
             position: relative;
         }
 
-       
-
         .portal-header {
             display: flex;
             align-items: center;
@@ -110,7 +108,6 @@
             width: 40px;
         }
 
-
         .input-field {
             background-color: rgba(255, 255, 255, 0.2);
             color: white;
@@ -124,6 +121,35 @@
 
         .input-field::placeholder {
             color: #ccc;
+        }
+
+        .social-login {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .social-login a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            background-color: #f5f5f5;
+            color: #555;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .social-login a:hover {
+            background-color: #e0e0e0;
+        }
+
+        .social-login img {
+            height: 20px;
+            margin-right: 8px;
         }
     </style>
 </head>
@@ -140,22 +166,32 @@
         </div>
 
         <form action="{{ route('captive-portal.store') }}" method="POST">
-        @csrf
+            @csrf
 
-         <!-- Name and Email Fields -->
-         <input type="text" name="name" class="input-field" placeholder="Enter your name" required>
+            <!-- Name and Email Fields -->
+            <input type="text" name="name" class="input-field" placeholder="Enter your name" required>
             <input type="email" name="email" class="input-field" placeholder="Enter your email" required>
 
-        <div class="checkbox-container">
-            <label><input type="checkbox"> I agree with the Terms of Use</label>
-            <label><input type="checkbox"> I agree with the Privacy Policy</label>
-            <label><input type="checkbox"> Accept Marketing Materials</label>
-        </div>
+            <div class="checkbox-container">
+                <label><input type="checkbox"> I agree with the Terms of Use</label>
+                <label><input type="checkbox"> I agree with the Privacy Policy</label>
+                <label><input type="checkbox"> Accept Marketing Materials</label>
+            </div>
 
-        <button class="connect-btn">Connect to WiFi</button>
+            <button class="connect-btn">Connect to WiFi</button>
+        </form>
 
-        <div class="footer-logo">
-            <img src="/images/coff.png" alt="Bottom Logo">
+        <!-- Social login -->
+        <div class="social-login">
+            <a href="{{ route('auth.redirection', ['provider' => 'google']) }}">
+                <img src="/images/google-icon.png" alt="Google Icon">
+                Log in with Google
+            </a>
+
+            <a href="{{ route('auth.redirection', ['provider' => 'facebook']) }}">
+                <img src="/images/fb.png" alt="Facebook Icon">
+                Log in with Facebook
+            </a>
         </div>
     </div>
 </body>

@@ -1,0 +1,177 @@
+[33mcommit 749a8119946afa6136ac504a66fb436832c4e55b[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Thaba111 <writersherry5@gmail.com>
+Date:   Fri Nov 8 09:58:27 2024 +0300
+
+    Added socialite login using google and facebook. To work on  successful facebook login, and redirection to the right dashboard
+
+[33mcommit 8afd333ec5627613c5473419b8a5021f48fdbb5c[m
+Author: Thaba111 <writersherry5@gmail.com>
+Date:   Wed Oct 30 10:37:31 2024 +0300
+
+    Created a captive-portal folder fole all the templates. Added brew-heaven, flavor-fusion, and mamas-sauce views. Added a success page to redirect after connecting to wifi.
+
+[33mcommit 974eb75d5790de440cb1c70421fd8038b74db88e[m
+Author: Thaba111 <writersherry5@gmail.com>
+Date:   Mon Oct 28 23:20:52 2024 +0300
+
+    feat: Implement Captive Portal with Model, Resource Controller, Database Table, and Responsive Blade View
+
+[33mcommit ce4b913f84226eee3470bc558d75535337eb43e0[m
+Author: Thaba111 <writersherry5@gmail.com>
+Date:   Mon Oct 28 10:05:56 2024 +0300
+
+    Updated the table display for setting values in the SettingResource.- Modified the `formatStateUsing` function to decode JSON-encoded values.
+
+[33mcommit 2b7c44362b38790207474632f5033862ddf89cb1[m
+Author: Thaba111 <writersherry5@gmail.com>
+Date:   Mon Oct 28 09:27:56 2024 +0300
+
+    Changed the value field to be of type json in the settings table. This will allow you to store multiple values in a structured format.
+
+[33mcommit 390fcc3f4403eeabbdf9b5406f7e76a174a68275[m
+Author: Thaba111 <writersherry5@gmail.com>
+Date:   Mon Oct 28 07:27:51 2024 +0300
+
+    Modified `SettingController` to serialize and unserialize multiple values.
+
+[33mcommit f93754b1ec88d51fd9895ab2b6982efe7b49cceb[m
+Author: Thaba111 <writersherry5@gmail.com>
+Date:   Wed Oct 23 17:37:56 2024 +0300
+
+    Enhance settings management functionality. Implemented the ability to create new settings with optional key and value fields. To work on this so it updates and displays on UI after saving.
+
+[33mcommit 91d653fe74e3a35af928873fbff403823b85a6ab[m
+Author: Thaba111 <writersherry5@gmail.com>
+Date:   Tue Oct 22 22:21:37 2024 +0300
+
+    Worked on setting resource to allow user custom their keys and values. To work on improving the create to be more user friendly
+
+[33mcommit a568ecc00e9125e60cccf7dbfa47893ae9422a8c[m
+Author: Thaba111 <writersherry5@gmail.com>
+Date:   Tue Oct 22 11:28:51 2024 +0300
+
+    Deleted campaign contact and campaign report resources. Added a settings table,To work on the particulars to create a custa\om page form.
+
+[33mcommit 5165ae1d96877df980dd669feb01288f62715948[m
+Author: Thaba111 <writersherry5@gmail.com>
+Date:   Fri Oct 11 21:37:10 2024 +0300
+
+    worked on Banner Impression table. Still to work on fetching the impression and not creating them
+
+[33mcommit ed4a751e97334953a3c5753a9002272358377f9c[m
+Author: Thaba111 <writersherry5@gmail.com>
+Date:   Fri Oct 11 21:02:41 2024 +0300
+
+    Added a chart to visualize clicks, opens, and conversions in the Campaign Reports form, updated the table for better sorting and formatting, and restricted report creation and editing. Next,  focus on fetching accurate data for the reports.
+
+[33mcommit 0e5daedc45f500a27b33cc3c9e82d7910ef46eb9[m
+Author: Thaba111 <writersherry5@gmail.com>
+Date:   Fri Oct 11 11:35:36 2024 +0300
+
+    Add campaign report and banner impression functionality. Implemented campaign report model and schema, including fields for clicks, opens, conversions, and report date. Created seeder for testing campaign reports with sample data. To work on the campaign report and banner impression to reflect after action not manual input
+
+[33mcommit f96693671de191109569169e1f99ac31da9bf716[m
+Author: Thaba111 <writersherry5@gmail.com>
+Date:   Tue Oct 8 22:09:59 2024 +0300
+
+    Created and enhanced the Ad and Banner management system by adding dynamic scheduling options, including Daily, Weekly, and Custom schedules. Updated `AdController` to handle these new features, and modified the database schema accordingly.
+
+[33mcommit 29e3e59672d62c07254e5fcaa17204bbf9b81b65[m
+Author: fabianmuema <muemafabian@gmail.com>
+Date:   Tue Oct 8 18:08:10 2024 +0300
+
+    Add SVG icons for more actions and users
+    
+    Introduced new SVG files `more-actions.svg` and `users.svg` to the resources directory. These additions enhance the visual interface with icons for additional actions and user-related functionalities.
+
+[33mcommit 728088069f92f1f8f2c87abd90bdd39d1e378d59[m
+Author: fabianmuema <muemafabian@gmail.com>
+Date:   Tue Oct 8 12:07:49 2024 +0300
+
+    Enhance user management and notifications
+    
+    Added user suspension notifications and role-based filtering and tabs for the user list. Introduced Blade Icons configuration and user types enumeration for better role handling.
+
+[33mcommit f52db1a6c41b9cc56a54b93b7db8215c95ab64a6[m
+Author: Thaba111 <writersherry5@gmail.com>
+Date:   Tue Oct 8 10:53:52 2024 +0300
+
+    Latest update. Still working on contact import
+
+[33mcommit ccba52a241a50632f273f828127bf1c8131d059f[m
+Author: Thaba111 <writersherry5@gmail.com>
+Date:   Mon Oct 7 16:20:10 2024 +0300
+
+    Added functionalities to import and export contacts. To work of import functionality. Export working well.
+
+[33mcommit 01a64e8e7ea497b83615a054424f97c19bf30cff[m
+Author: Thaba111 <writersherry5@gmail.com>
+Date:   Mon Oct 7 08:43:17 2024 +0300
+
+    feat(database): create campaigns, campaign_contacts, and automation_rules tables with necessary fields and relationships
+
+[33mcommit a16515ccc93798eae0ab1eb3797198abe9bc5241[m
+Merge: f303b9a 99fd4a4
+Author: Thaba111 <writersherry5@gmail.com>
+Date:   Wed Oct 2 10:34:17 2024 +0300
+
+    Merge branch 'main' of https://github.com/Thaba111/wifi-marketing
+
+[33mcommit f303b9aecb93f65b3b3b8c600cb07d12ba39891f[m
+Author: Thaba111 <writersherry5@gmail.com>
+Date:   Wed Oct 2 10:33:55 2024 +0300
+
+    Save local changes before pulling
+
+[33mcommit 99fd4a43773a4ee7d26be2b8b9a3b3f35f6a9863[m
+Author: fabianmuema <muemafabian@gmail.com>
+Date:   Wed Oct 2 10:28:51 2024 +0300
+
+    Refactor migrations and update contact-segment relationship
+    
+    Refactored the migrations to consolidate the contact-segment relationship into a junction table. Updated the Contact and Segment models and resources to accommodate the changes, including custom handling for creating contacts and segments with associated data.
+
+[33mcommit 35a6a57f4cdd28ae65494f6cbe4626f6152f70af[m
+Author: fabianmuema <muemafabian@gmail.com>
+Date:   Wed Oct 2 09:31:52 2024 +0300
+
+    Refactor migrations and update contact-segment relationship
+    
+    Refactored the migrations to consolidate the contact-segment relationship into a junction table. Updated the Contact and Segment models and resources to accommodate the changes, including custom handling for creating contacts and segments with associated data.
+
+[33mcommit a18e8856845815d3170e4ecad9c5a6acd7747862[m
+Author: Thaba111 <writersherry5@gmail.com>
+Date:   Tue Oct 1 14:07:55 2024 +0300
+
+    Removed relationship managers. To work on later
+
+[33mcommit 6503627f4a1b21302a79d7c5cd97a7f3ff29314a[m[33m ([m[1;32mbackup-branch-name[m[33m)[m
+Author: Thaba111 <writersherry5@gmail.com>
+Date:   Mon Sep 30 11:57:25 2024 +0300
+
+    Worked on segment resource. To confirm on specifics
+
+[33mcommit 36f035684edcc32deca6d214b6405ab906441aba[m
+Author: Thaba111 <writersherry5@gmail.com>
+Date:   Mon Sep 30 10:09:23 2024 +0300
+
+    Created contact resource to allow CRUD operations for new contacts
+
+[33mcommit 1c4066f5bda5f199e529c50033ebdca8ee8f5732[m
+Author: Thaba111 <writersherry5@gmail.com>
+Date:   Mon Sep 30 01:48:58 2024 +0300
+
+    To add email notification after user suspension
+
+[33mcommit 462f2a39652b0ca27a0949ed7989c2b884e07b93[m
+Author: Thaba111 <writersherry5@gmail.com>
+Date:   Mon Sep 30 01:31:58 2024 +0300
+
+    functionality to suspend and unsuspend, and reason why you want to suspend user
+
+[33mcommit 2d3aef2156855e50c6f28207c5fd2ac15c33da85[m
+Merge: 8c8cf58 f75d3af
+Author: Thaba111 <writersherry5@gmail.com>
+Date:   Sun Sep 29 22:44:51 2024 +0300
+
+    Merge branch 'main' of https://github.com/Thaba111/wifi-ma
