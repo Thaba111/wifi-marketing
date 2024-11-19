@@ -74,10 +74,11 @@
             <img src="{{ asset('images/mamas-sauce-logo.png') }}" alt="Mama's Sauce Pizza">
         </div>
 
-        <a href="#" class="button facebook">
+        <a href="{{ route('auth.redirection', ['provider' => 'facebook']) }}" class="button facebook">
             <img src="\images\fb-icon.png" alt="Facebook Icon">
             Connect with Facebook
         </a>
+            
         <a href="#" class="button instagram">
             <img src="\images\ig-icon.png" alt="Instagram Icon">
             Connect with Instagram
@@ -86,10 +87,11 @@
             <img src="\images\x-icon.png" alt="Twitter Icon">
             Connect with Twitter
         </a>
-        <a href="#" class="button email">
-            <img src="\images\email.png" alt="Email Icon">
-            Connect with Email
+        <a href="{{ route('auth.redirection', ['provider' => 'google']) }}" class="button email">
+            <img src="/images/google-icon.png" alt="Google Icon">
+            Connect with Google
         </a>
+
         <a href="#" class="button sms">
             <img src="\images\sms.png" alt="SMS Icon">
             Connect with SMS

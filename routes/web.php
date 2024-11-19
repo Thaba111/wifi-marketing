@@ -37,9 +37,14 @@ Route::middleware('auth')->group(function () {
 //     return view('captive-portal.brew-heaven.create');
 // })->name('login');
 
+// // Redirect 'login' route to flavor-fusion
+// Route::get('login', function () {
+//     return view('captive-portal.flavor-fusion.create');
+// })->name('login');
+
 // Redirect 'login' route to flavor-fusion
 Route::get('login', function () {
-    return view('captive-portal.flavor-fusion.create');
+    return view('captive-portal.mamas-sauce.create');
 })->name('login');
 
 
