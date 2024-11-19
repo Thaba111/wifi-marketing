@@ -34,7 +34,7 @@ class SocialiteController extends Controller
             if ($user) {
                 // If the user already exists, log them in
                 Auth::login($user);
-                return redirect()->route('/admin'); // Redirect to the desired route
+                return redirect()->route('dashboard'); // Redirect to the desired route
             } else {
                 // If the user doesn't exist, create a new one
                 $userData = User::create([
@@ -47,7 +47,7 @@ class SocialiteController extends Controller
     
                 if ($userData) {
                     Auth::login($userData);
-                    return redirect()->route('/admin'); 
+                    return redirect()->route('dashboard'); 
                 
                 }
             }
@@ -61,3 +61,4 @@ class SocialiteController extends Controller
     
 
 }
+

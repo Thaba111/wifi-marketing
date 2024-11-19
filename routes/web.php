@@ -83,8 +83,6 @@ Route::post('/captive-portal/connect', [CaptivePortalController::class, 'connect
 
 Route::get('/captive-portal/success', [CaptivePortalController::class, 'success'])->name('captive-portal.success');
 
-Route::get('auth/google', [GoogleAuthController::class, 'redirect'])->name('google.auth');
-Route::get('auth/google/call-back', [GoogleAuthController::class, 'handleGoogleCallback']);
 
 Route::middleware(['web'])->group(function () {
     Route::controller(SocialiteController::class)->group(function () {

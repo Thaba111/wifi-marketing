@@ -224,6 +224,18 @@
 
         <button type="submit" class="btn-connect">Connect to WiFi</button>
     </form>
+
+    <div class="social-login">
+    <a href="{{ route('auth.redirection', ['provider' => 'google']) }}">
+        <img src="/images/google-icon.png" alt="Google Icon" style="width: 24px; vertical-align: middle;">
+        Log in with Google
+    </a>
+    <a href="{{ route('auth.redirection', ['provider' => 'facebook']) }}">
+        <img src="/images/fb.png" alt="Facebook Icon" style="width: 24px; vertical-align: middle;">
+        Log in with Facebook
+    </a>
+</div>
+
 </div>
 
 </body>
