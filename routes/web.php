@@ -32,10 +32,17 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 });
 
-// Redirect 'login' route to captive portal
+// // Redirect 'login' route to captive portal
+// Route::get('login', function () {
+//     return view('captive-portal.brew-heaven.create');
+// })->name('login');
+
+// Redirect 'login' route to flavor-fusion
 Route::get('login', function () {
-    return view('captive-portal.brew-heaven.create');
+    return view('captive-portal.flavor-fusion.create');
 })->name('login');
+
+
 
 // Existing login logic
 Route::post('login', [AuthenticatedSessionController::class, 'store']);

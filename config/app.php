@@ -123,14 +123,6 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
-    'providers' => [
-    // Other providers...
-    Laravel\Socialite\SocialiteServiceProvider::class,
-],
-
-'aliases' => [
-    // Other aliases...
-    'Socialite' => Laravel\Socialite\Facades\Socialite::class,
-],
+    
 
 ];

@@ -131,6 +131,58 @@
             background-color: #e55d2b;
         }
 
+        /* Social login buttons */
+    .social-login {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .social-login a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        background-color: #f5f5f5;
+        color: #555;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        text-decoration: none;
+        transition: background 0.3s;
+        font-size: 1em;
+        text-align: left;
+    }
+
+    .social-login a:hover {
+        background-color: #e0e0e0;
+    }
+
+    .social-login img {
+        height: 20px;
+        margin-right: 8px;
+    }
+
+    .social-login .google-btn {
+        background-color: #4285F4;
+        border: 1px solid #357AE8;
+    }
+
+    .social-login .google-btn:hover {
+        background-color: #357AE8;
+        color: white;
+    }
+
+    .social-login .facebook-btn {
+        background-color: #3B5998;
+        border: 1px solid #2D4373;
+    }
+
+    .social-login .facebook-btn:hover {
+        background-color: #2D4373;
+        color: white;
+    }
+
         /* Tablet view */
         @media (max-width: 768px) {
             .form-container {
@@ -181,7 +233,10 @@
             .btn-connect {
                 font-size: 16px;
             }
-
+            .social-login a {
+                font-size: 0.9em;
+                padding: 8px;
+    }
                        
         }
     </style>
