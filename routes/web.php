@@ -50,17 +50,19 @@ Route::get('login', function () {
 
 
 // Existing login logic
+Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
+
 Route::post('login', [AuthenticatedSessionController::class, 'store']);
 
 
-// Route::middleware('guest')->group(function () { 
-//     Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
-//     Route::post('login', [AuthenticatedSessionController::class, 'store']);
+Route::middleware('guest')->group(function () { 
+    Route::get('login', [AuthenticatedSessionController::class, 'create'])->name('login');
+    Route::post('login', [AuthenticatedSessionController::class, 'store']);
    
-//     Route::get('register', [RegisterController::class, 'create'])->name('register');
-//     Route::post('register', [RegisterController::class, 'store']);
+    Route::get('register', [RegisterController::class, 'create'])->name('register');
+    Route::post('register', [RegisterController::class, 'store']);
      
-// });
+});
 Route::post('/logout', function () {
 return redirect('/');})->name('logout');
 

@@ -1,50 +1,193 @@
-<x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brew Heaven Captive Portal</title>
+    <link rel="stylesheet" href="{{ asset('css/portal.css') }}">
+    <style>
+        /* General Reset */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
+        /* Main Styles */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('/images/cafe1.jpg') no-repeat center center/cover;
+        }
 
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        .portal-container {
+            width: 90%;
+            max-width: 400px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 15px;
+            padding: 20px;
+            color: white;
+            text-align: center;
+            position: relative;
+        }
+
+        .portal-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 50px;
+            margin-bottom: 25px;
+        }
+
+        .portal-header h1 {
+            font-size: 2.3em;
+            font-weight: bold;
+        }
+
+        p {
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .wifi-icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            margin: 20px auto;
+        }
+
+        .wifi-icon img {
+            width: 70px;
+            opacity: 0.8;
+        }
+
+        .input-field {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+
+        .input-field::placeholder {
+            color: #ccc;
+        }
+
+        .connect-btn {
+            background-color: #ff6600;
+            color: white;
+            padding: 10px;
+            width: 100%;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 10px;
+        }
+
+        .social-login {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .social-login a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            background-color: #f5f5f5;
+            color: #555;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .social-login a:hover {
+            background-color: #e0e0e0;
+        }
+
+        .social-login img {
+            height: 20px;
+            margin-right: 8px;
+        }
+
+        .checkbox-container {
+            text-align: left;
+            margin: 15px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+.checkbox-container label {
+            font-size: 0.8em;
+            display: flex;
+            align-items: center;
+            gap: 8px; 
+}
+
+.checkbox-container input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            margin: 0; 
+}
+
+    </style>
+</head>
+<body>
+    <div class="portal-container">
+        <div class="portal-header">
+            <h1>BREW HEAVEN</h1>
         </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+        <p>Welcome to our place. Log in to connect to WiFi.</p>
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        <div class="wifi-icon">
+            <img src="/images/wifi3.png" alt="WiFi Icon">
         </div>
 
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-            </label>
-        </div>
+        <!-- Login Form -->
+        <form action="{{ route('login') }}" method="POST">
+            @csrf
 
-        <!-- social login -->
-        <div class="mt-6 text-center">
-            <a href="{{ route('auth.redirection', ['provider' => 'google']) }}" class="inline-flex items-center px-6 py-3 bg-gray-100 text-gray-700 rounded-md border border-gray-300 hover:bg-gray-200 focus:ring-2 focus:ring-gray-300 focus:outline-none">
-                <img src="/images/google-icon.png" alt="Google Icon" class="h-5 w-5 mr-2">
-                {{ __('Log in with Google') }}
+            <!-- Email Field -->
+            <input type="email" name="email" class="input-field" placeholder="Enter your email" required autofocus>
+
+            <!-- Password Field -->
+            <input type="password" name="password" class="input-field" placeholder="Enter your password" required>
+            <div class="checkbox-container">
+                <label><input type="checkbox"> I agree with the Terms of Use</label>
+                <label><input type="checkbox"> I agree with the Privacy Policy</label>
+                <label><input type="checkbox"> Accept Marketing Materials</label>
+            </div>
+            <!-- Login Button -->
+            <button type="submit" class="connect-btn">Login</button>
+        </form>
+
+        <!-- Social login -->
+        <div class="social-login">
+            <a href="{{ route('auth.redirection', ['provider' => 'google']) }}">
+                <img src="/images/google-icon.png" alt="Google Icon">
+                Log in with Google
+            </a>
+
+            <a href="{{ route('auth.redirection', ['provider' => 'facebook']) }}">
+                <img src="/images/fb.png" alt="Facebook Icon">
+                Log in with Facebook
             </a>
         </div>
-
-        <div class="mt-6 text-center">
-            <a href="{{ route('auth.redirection', ['provider' => 'facebook']) }}" class="inline-flex items-center px-6 py-3 bg-gray-100 text-gray-700 rounded-md border border-gray-300 hover:bg-gray-200 focus:ring-2 focus:ring-gray-300 focus:outline-none">
-                <img src="/images/fb.png" alt="Fb Icon" class="h-5 w-5 mr-2">
-                {{ __('Log in with Facebook') }}
-            </a>
-        </div>
-    </form>
-</x-guest-layout>
+    </div>
+</body>
+</html>

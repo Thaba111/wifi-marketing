@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
@@ -43,13 +43,10 @@ class RegisterController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        // Trigger the Registered event for email verification
-        event(new Registered($user));
+        // Log the user in
+        Auth::login($user);
 
-        // Log out the user after registration
-        Auth::logout();
-
-        // Redirect to the email verification notice
-        return redirect()->route('verification.notice')->with('status', 'Please verify your email address to continue.');
+        // Redirect to the intended page (e.g., dashboard)
+        return redirect()->route('dashboard'); 
     }
 }

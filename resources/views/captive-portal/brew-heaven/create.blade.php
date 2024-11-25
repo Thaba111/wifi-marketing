@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Brew Heaven Captive Portal</title>
+    <title>Brew Heaven Captive Portal - Login</title>
     <link rel="stylesheet" href="{{ asset('css/portal.css') }}">
     <style>
         /* General Reset */
@@ -38,12 +38,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 50px;
             margin-bottom: 25px;
-        }
-
-        .portal-header img {
-            width: 40px;
         }
 
         .portal-header h1 {
@@ -51,25 +46,19 @@
             font-weight: bold;
         }
 
-        p {
-            font-size: 0.9em;
-            margin-bottom: 10px;
+        .input-field {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+            font-size: 1em;
         }
 
-        .wifi-icon {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            /* background-color: #333; */
-            border-radius: 50%;
-            width: 80px;
-            height: 80px;
-            margin: 20px auto;
-        }
-
-        .wifi-icon img {
-            width: 70px;
-            opacity: 0.8;
+        .input-field::placeholder {
+            color: #ccc;
         }
 
         .checkbox-container {
@@ -88,7 +77,7 @@
             margin-right: 8px;
         }
 
-        .connect-btn {
+        .login-btn {
             background-color: #ff6600;
             color: white;
             padding: 10px;
@@ -97,59 +86,11 @@
             border-radius: 8px;
             cursor: pointer;
             font-size: 1em;
-            margin-top: 10px;
-        }
-
-        .footer-logo {
             margin-top: 20px;
         }
 
-        .footer-logo img {
-            width: 40px;
-        }
-
-        .input-field {
-            background-color: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: none;
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 8px;
-            font-size: 1em;
-        }
-
-        .input-field::placeholder {
-            color: #ccc;
-        }
-
-        .social-login {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 20px;
-        }
-
-        .social-login a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 10px;
-            background-color: #f5f5f5;
-            color: #555;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            text-decoration: none;
-            transition: background 0.3s;
-        }
-
-        .social-login a:hover {
-            background-color: #e0e0e0;
-        }
-
-        .social-login img {
-            height: 20px;
-            margin-right: 8px;
+        .login-btn:hover {
+            background-color: #e55a00;
         }
     </style>
 </head>
@@ -159,40 +100,30 @@
             <h1>BREW HEAVEN</h1>
         </div>
 
-        <p>Welcome to our place. We hope you have a long and enjoyable stay!</p>
+        <p>Welcome back! Please log in to access the dashboard.</p>
 
-        <div class="wifi-icon">
-            <img src="/images/wifi3.png" alt="WiFi Icon">
-        </div>
-
-        <form action="{{ route('captive-portal.store') }}" method="POST">
+        <form method="POST" action="{{ route('login') }}">
             @csrf
 
-            <!-- Name and Email Fields -->
-            <input type="text" name="name" class="input-field" placeholder="Enter your name" required>
+            <!-- Email Address Field -->
             <input type="email" name="email" class="input-field" placeholder="Enter your email" required>
 
+            <!-- Password Field -->
+            <input type="password" name="password" class="input-field" placeholder="Enter your password" required>
+
+            <!-- Terms and Conditions -->
             <div class="checkbox-container">
-                <label><input type="checkbox"> I agree with the Terms of Use</label>
-                <label><input type="checkbox"> I agree with the Privacy Policy</label>
-                <label><input type="checkbox"> Accept Marketing Materials</label>
+                <label>
+                    <input type="checkbox" required> I agree with the Terms of Use
+                </label>
+                <label>
+                    <input type="checkbox" required> I agree with the Privacy Policy
+                </label>
             </div>
 
-            <button class="connect-btn">Connect to WiFi</button>
+            <!-- Login Button -->
+            <button type="submit" class="login-btn">Log in</button>
         </form>
-
-        <!-- Social login -->
-        <div class="social-login">
-            <a href="{{ route('auth.redirection', ['provider' => 'google']) }}">
-                <img src="/images/google-icon.png" alt="Google Icon">
-                Log in with Google
-            </a>
-
-            <a href="{{ route('auth.redirection', ['provider' => 'facebook']) }}">
-                <img src="/images/fb.png" alt="Facebook Icon">
-                Log in with Facebook
-            </a>
-        </div>
     </div>
 </body>
 </html>

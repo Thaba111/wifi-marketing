@@ -13,9 +13,5 @@
                 </div>
             </div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {{-- Replace with custom Livewire component if available --}}
-        @livewire('stats-overview')
     </div>
-
 </x-app-layout>
