@@ -11,15 +11,17 @@ use App\Http\Controllers\AdController;
 use App\Http\Controllers\BannerImpressionController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\CaptivePortalController;
-use App\Http\Controllers\GoogleAuthController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SocialiteController;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::get('/', [HomeController::class,'homepage']);
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -32,7 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 });
 
-// // Redirect 'login' route to captive portal
+// Redirect 'login' route to captive portal
 // Route::get('login', function () {
 //     return view('captive-portal.brew-heaven.create');
 // })->name('login');
