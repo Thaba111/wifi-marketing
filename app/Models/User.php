@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Notifications\AdminVerifyEmail;
 
 
 class User extends Authenticatable implements MustVerifyEmail
@@ -53,23 +54,8 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
-//     public function scopeAdmins($query)
-//     {
-//         return $query->where('role', UserTypes::ADMIN);
-//     }
-
-//     public function scopeMarketers($query)
-//     {
-//         return $query->where('role', UserTypes::MARKETER);
-//     }
-
-//     public function scopeViewers($query)
-//     {
-//         return $query->where('role', UserTypes::VIEWER);
-//     }
-
-//     public function isAdmin()
-// {
-//     return $this->role === 'admin'; 
-// }
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new AdminVerifyEmail);
+    }
 }

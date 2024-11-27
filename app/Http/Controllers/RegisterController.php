@@ -28,28 +28,23 @@ class RegisterController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
-    {
-        // Validate the request data
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-        ]);
+{
+    $validatedData = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email',
+        'password' => 'required|confirmed|min:8',
+    ]);
 
-        // Create the new user
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+    $user = User::create([
+        'name' => $validatedData['name'],
+        'email' => $validatedData['email'],
+        'password' => bcrypt($validatedData['password']),
+    ]);
 
-        // Trigger the Registered event for email verification
-        event(new Registered($user));
+    // Send email verification link
+    $user->sendEmailVerificationNotification();
 
-        // Log out the user after registration
-        Auth::logout();
+    return redirect()->route('login')->with('status', 'Registration successful! Please check your email to verify your account.');
+}
 
-        // Redirect to the email verification notice
-        return redirect()->route('verification.notice')->with('status', 'Please verify your email address to continue.');
-    }
 }
