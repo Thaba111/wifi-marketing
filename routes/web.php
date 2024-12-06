@@ -111,6 +111,18 @@ Route::middleware(['web'])->group(function () {
     });
 });
 
+Route::middleware('auth')->group(function () {
+    Route::get('admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+});
+
+Route::post('/admin/update-avatar', [AdminController::class, 'updateAvatar'])->name('admin.update-avatar');
+Route::put('/admin/profile', [AdminController::class, 'updateAvatar'])->name('admin.profile.update');
+Route::get('/admin/profile', [AdminController::class, 'showProfile'])->name('admin.profile');
+Route::get('/admin/profile/edit', [AdminController::class, 'editProfile'])->name('admin.profile.edit');
+Route::put('/admin/profile/update', [AdminController::class, 'updateProfile'])->name('admin.profile.update');
+Route::get('/admin/avatar/edit', [AdminController::class, 'editAvatar'])->name('admin.avatar.edit');
+Route::put('/admin/avatar/update', [AdminController::class, 'updateAvatar'])->name('admin.avatar.update');
+
 
 Auth::routes(['verify' => true]);
 
