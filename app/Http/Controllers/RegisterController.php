@@ -4,10 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
@@ -29,22 +27,30 @@ class RegisterController extends Controller
      */
     public function store(Request $request)
 {
+    // Validate the incoming request data
     $validatedData = $request->validate([
         'name' => 'required|string|max:255',
         'email' => 'required|email|unique:users,email',
         'password' => 'required|confirmed|min:8',
     ]);
 
+    // Create the user
     $user = User::create([
         'name' => $validatedData['name'],
         'email' => $validatedData['email'],
-        'password' => bcrypt($validatedData['password']),
+        'password' => Hash::make($validatedData['password']),
     ]);
 
-    // Send email verification link
+    // Send email verification notification
     $user->sendEmailVerificationNotification();
 
-    return redirect()->route('login')->with('status', 'Registration successful! Please check your email to verify your account.');
+    // Redirect to the login page with a success message
+    return redirect()->route('dashboard')->with('status', 'Registration successful! Please check your email to verify your account before logging in.');
+}
+
+    protected function registered(Request $request, $user)
+{
+    return redirect('/email/verify');
 }
 
 }

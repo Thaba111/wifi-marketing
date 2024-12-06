@@ -15,6 +15,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SocialiteController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 
 use App\Models\User;
@@ -110,28 +111,31 @@ Route::middleware(['web'])->group(function () {
     });
 });
 
+
+Auth::routes(['verify' => true]);
+
+// Email Verification Routes
 Route::get('/email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');
 
-
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
-    return redirect('/admin/dashboard'); 
+    return redirect('/dashboard');  // Adjust according to your needs
 })->middleware(['auth', 'signed'])->name('verification.verify');
-
 
 Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
     return back()->with('status', 'Verification link sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
-
+// Admin Email Verification
 Route::get('/admin/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
-
     return redirect('/admin/dashboard'); 
 })->middleware(['auth:admin', 'signed'])->name('filament.admin.auth.email-verification.verify');
+
+
 
 require __DIR__.'/auth.php';
 

@@ -17,8 +17,9 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->enum('role', ['admin', 'marketer', 'viewer']);
-            $table->boolean('status')->default(true);  // Active or inactive status
-            $table->boolean('is_suspended')->default(false);  // Suspended or not
+            $table->boolean('status')->default(true);  
+            $table->boolean('is_suspended')->default(false); 
+            $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();
         });
     }
